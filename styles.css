@@ -688,6 +688,32 @@ a {
   color: var(--muted);
 }
 
+.modal-options {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.option-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.option-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(24, 22, 20, 0.1);
+  background: #f7f3ee;
+  color: var(--text);
+  font-size: 0.92rem;
+  font-weight: 500;
+}
+
 .hidden {
   display: none !important;
 }

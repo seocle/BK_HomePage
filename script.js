@@ -119,6 +119,8 @@ const translations = {
     "admin.priceZh": "가격(CN)",
     "admin.descKo": "설명(KR)",
     "admin.descZh": "설명(CN)",
+    "admin.colors": "컬러",
+    "admin.sizes": "사이즈",
     "admin.category": "카테고리",
     "admin.isNew": "신상품 표시",
     "admin.isNewHelp": "체크하면 신상품 페이지에도 함께 노출됩니다.",
@@ -212,6 +214,8 @@ const translations = {
     "admin.priceZh": "价格(CN)",
     "admin.descKo": "说明(KR)",
     "admin.descZh": "说明(CN)",
+    "admin.colors": "颜色",
+    "admin.sizes": "尺码",
     "admin.category": "分类",
     "admin.isNew": "新品显示",
     "admin.isNewHelp": "勾选后会同时显示在新品页面。",
@@ -295,6 +299,8 @@ function fillProductForm(product) {
   document.getElementById("price-zh").value = product.price?.zh || "";
   document.getElementById("desc-ko").value = product.description?.ko || "";
   document.getElementById("desc-zh").value = product.description?.zh || "";
+  document.getElementById("colors-input").value = (product.colors || []).join(", ");
+  document.getElementById("sizes-input").value = (product.sizes || []).join(", ");
   document.getElementById("category").value = product.category || "outer";
   document.getElementById("is-new").checked = Boolean(product.isNew);
   document.getElementById("product-images").value = "";
@@ -320,10 +326,28 @@ function normalizeProduct(row) {
     category: row.category || "outer",
     isNew: Boolean(row.is_new),
     hidden: Boolean(row.hidden),
+    colors: Array.isArray(row.colors) ? row.colors : [],
+    sizes: Array.isArray(row.sizes) ? row.sizes : [],
     price: row.price,
     soldOut: row.sold_out,
     images: row.images
   };
+}
+
+function parseOptionInput(value) {
+  return (value || "")
+    .split(",")
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
+
+function renderOptionTags(items = []) {
+  if (!Array.isArray(items) || !items.length) return "";
+  return `
+    <div class="option-tags">
+      ${items.map((item) => `<span class="option-chip">${item}</span>`).join("")}
+    </div>
+  `;
 }
 
 function getCurrentFilter() {
@@ -628,6 +652,20 @@ function renderModal() {
   modalCount.textContent = translations[currentLang]["modal.count"]
     .replace("{current}", String(currentImageIndex + 1))
     .replace("{total}", String(currentProduct.images.length));
+
+  let optionBlock = document.getElementById("modal-options");
+  if (!optionBlock) {
+    optionBlock = document.createElement("div");
+    optionBlock.id = "modal-options";
+    optionBlock.className = "modal-options";
+    modalPrice.insertAdjacentElement("afterend", optionBlock);
+  }
+
+  optionBlock.innerHTML = `
+    ${renderOptionTags(currentProduct.colors)}
+    ${renderOptionTags(currentProduct.sizes)}
+  `;
+  optionBlock.classList.toggle("hidden", !(currentProduct.colors?.length || currentProduct.sizes?.length));
 }
 
 function moveImage(direction) {
@@ -879,6 +917,8 @@ async function setupAdminPage() {
             ko: document.getElementById("desc-ko").value.trim(),
             zh: document.getElementById("desc-zh").value.trim() || document.getElementById("desc-ko").value.trim()
           },
+          colors: parseOptionInput(document.getElementById("colors-input").value),
+          sizes: parseOptionInput(document.getElementById("sizes-input").value),
           category,
           is_new: document.getElementById("is-new").checked,
           hidden: existingProduct?.hidden || false,

@@ -1,13 +1,20 @@
 const STORAGE_KEYS = {
-  lang: "bk-lang",
-  products: "bk-products-v2",
-  auth: "bk-admin-auth"
+  lang: "bk-lang"
 };
 
-const ADMIN_CREDENTIALS = {
-  id: "cgh5454",
-  password: "bk1228!!"
+const SUPABASE_CONFIG = {
+  url: "https://jgujifmixjmvfzckbgfw.supabase.co",
+  key: "sb_publishable_KjXxQ2ksryOx_1iQVb22Bw_1SUFpsTS"
 };
+
+const ADMIN_AUTH = {
+  username: "cgh5454",
+  email: "cgh5454@bk-homepage.local"
+};
+
+const supabaseClient = window.supabase
+  ? window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.key)
+  : null;
 
 const translations = {
   ko: {
@@ -81,11 +88,12 @@ const translations = {
     "admin.currentTitle": "등록 상품",
     "admin.toggleSoldOut": "품절 처리",
     "admin.toggleOnSale": "판매중으로 변경",
-    "admin.loginError": "아이디 또는 비밀번호가 다릅니다.",
+    "admin.loginError": "아이디 또는 비밀번호가 다르거나 관리자 계정이 아직 생성되지 않았습니다.",
     "admin.loginSuccess": "로그인되었습니다.",
     "admin.productSaved": "상품이 등록되었습니다.",
     "admin.imageRequired": "상품 이미지를 한 장 이상 선택해 주세요.",
     "admin.logoutDone": "로그아웃되었습니다.",
+    "admin.syncError": "Supabase 연결 또는 테이블 설정을 확인해 주세요.",
     "modal.prev": "이전",
     "modal.next": "다음",
     "modal.count": "{current} / {total} 이미지"
@@ -161,11 +169,12 @@ const translations = {
     "admin.currentTitle": "已登记商品",
     "admin.toggleSoldOut": "标记售罄",
     "admin.toggleOnSale": "恢复销售",
-    "admin.loginError": "账号或密码不正确。",
+    "admin.loginError": "账号或密码错误，或管理员账号尚未创建。",
     "admin.loginSuccess": "已登录。",
     "admin.productSaved": "商品已保存。",
     "admin.imageRequired": "请至少选择一张商品图片。",
     "admin.logoutDone": "已退出登录。",
+    "admin.syncError": "请检查 Supabase 连接或表设置。",
     "modal.prev": "上一张",
     "modal.next": "下一张",
     "modal.count": "图片 {current} / {total}"
@@ -189,16 +198,16 @@ const defaultProducts = [
     price: { ko: "52,000원", zh: "52,000韩元" },
     soldOut: false,
     images: [
-      "./Image/의류/반달포켓점퍼_52000원/KakaoTalk_20260319_014656878.jpg",
-      "./Image/의류/반달포켓점퍼_52000원/KakaoTalk_20260319_014656878_01.jpg",
-      "./Image/의류/반달포켓점퍼_52000원/KakaoTalk_20260319_014656878_02.jpg",
-      "./Image/의류/반달포켓점퍼_52000원/KakaoTalk_20260319_014656878_03.jpg",
-      "./Image/의류/반달포켓점퍼_52000원/KakaoTalk_20260319_014656878_04.jpg",
-      "./Image/의류/반달포켓점퍼_52000원/KakaoTalk_20260319_014656878_05.jpg",
-      "./Image/의류/반달포켓점퍼_52000원/KakaoTalk_20260319_014656878_06.jpg",
-      "./Image/의류/반달포켓점퍼_52000원/KakaoTalk_20260319_014656878_07.jpg",
-      "./Image/의류/반달포켓점퍼_52000원/KakaoTalk_20260319_014656878_08.jpg",
-      "./Image/의류/반달포켓점퍼_52000원/KakaoTalk_20260319_014656878_09.jpg"
+      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%EB%B0%98%EB%8B%AC%ED%8F%AC%EC%BC%93%EC%A0%90%ED%8D%BC_52000%EC%9B%90/KakaoTalk_20260319_014656878.jpg",
+      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%EB%B0%98%EB%8B%AC%ED%8F%AC%EC%BC%93%EC%A0%90%ED%8D%BC_52000%EC%9B%90/KakaoTalk_20260319_014656878_01.jpg",
+      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%EB%B0%98%EB%8B%AC%ED%8F%AC%EC%BC%93%EC%A0%90%ED%8D%BC_52000%EC%9B%90/KakaoTalk_20260319_014656878_02.jpg",
+      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%EB%B0%98%EB%8B%AC%ED%8F%AC%EC%BC%93%EC%A0%90%ED%8D%BC_52000%EC%9B%90/KakaoTalk_20260319_014656878_03.jpg",
+      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%EB%B0%98%EB%8B%AC%ED%8F%AC%EC%BC%93%EC%A0%90%ED%8D%BC_52000%EC%9B%90/KakaoTalk_20260319_014656878_04.jpg",
+      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%EB%B0%98%EB%8B%AC%ED%8F%AC%EC%BC%93%EC%A0%90%ED%8D%BC_52000%EC%9B%90/KakaoTalk_20260319_014656878_05.jpg",
+      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%EB%B0%98%EB%8B%AC%ED%8F%AC%EC%BC%93%EC%A0%90%ED%8D%BC_52000%EC%9B%90/KakaoTalk_20260319_014656878_06.jpg",
+      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%EB%B0%98%EB%8B%AC%ED%8F%AC%EC%BC%93%EC%A0%90%ED%8D%BC_52000%EC%9B%90/KakaoTalk_20260319_014656878_07.jpg",
+      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%EB%B0%98%EB%8B%AC%ED%8F%AC%EC%BC%93%EC%A0%90%ED%8D%BC_52000%EC%9B%90/KakaoTalk_20260319_014656878_08.jpg",
+      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%EB%B0%98%EB%8B%AC%ED%8F%AC%EC%BC%93%EC%A0%90%ED%8D%BC_52000%EC%9B%90/KakaoTalk_20260319_014656878_09.jpg"
     ]
   },
   {
@@ -217,14 +226,14 @@ const defaultProducts = [
     price: { ko: "37,000원", zh: "37,000韩元" },
     soldOut: false,
     images: [
-      "./Image/의류/파스텔줄지블라우스_37000원/KakaoTalk_20260319_014656878_10.jpg",
-      "./Image/의류/파스텔줄지블라우스_37000원/KakaoTalk_20260319_014656878_11.jpg",
-      "./Image/의류/파스텔줄지블라우스_37000원/KakaoTalk_20260319_014656878_12.jpg",
-      "./Image/의류/파스텔줄지블라우스_37000원/KakaoTalk_20260319_014656878_13.jpg",
-      "./Image/의류/파스텔줄지블라우스_37000원/KakaoTalk_20260319_014656878_14.jpg",
-      "./Image/의류/파스텔줄지블라우스_37000원/KakaoTalk_20260319_014656878_15.jpg",
-      "./Image/의류/파스텔줄지블라우스_37000원/KakaoTalk_20260319_014656878_16.jpg",
-      "./Image/의류/파스텔줄지블라우스_37000원/KakaoTalk_20260319_014656878_17.jpg"
+      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%ED%8C%8C%EC%8A%A4%ED%85%94%EC%A4%84%EC%A7%80%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4_37000%EC%9B%90/KakaoTalk_20260319_014656878_10.jpg",
+      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%ED%8C%8C%EC%8A%A4%ED%85%94%EC%A4%84%EC%A7%80%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4_37000%EC%9B%90/KakaoTalk_20260319_014656878_11.jpg",
+      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%ED%8C%8C%EC%8A%A4%ED%85%94%EC%A4%84%EC%A7%80%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4_37000%EC%9B%90/KakaoTalk_20260319_014656878_12.jpg",
+      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%ED%8C%8C%EC%8A%A4%ED%85%94%EC%A4%84%EC%A7%80%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4_37000%EC%9B%90/KakaoTalk_20260319_014656878_13.jpg",
+      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%ED%8C%8C%EC%8A%A4%ED%85%94%EC%A4%84%EC%A7%80%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4_37000%EC%9B%90/KakaoTalk_20260319_014656878_14.jpg",
+      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%ED%8C%8C%EC%8A%A4%ED%85%94%EC%A4%84%EC%A7%80%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4_37000%EC%9B%90/KakaoTalk_20260319_014656878_15.jpg",
+      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%ED%8C%8C%EC%8A%A4%ED%85%94%EC%A4%84%EC%A7%80%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4_37000%EC%9B%90/KakaoTalk_20260319_014656878_16.jpg",
+      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%ED%8C%8C%EC%8A%A4%ED%85%94%EC%A4%84%EC%A7%80%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4_37000%EC%9B%90/KakaoTalk_20260319_014656878_17.jpg"
     ]
   }
 ];
@@ -235,45 +244,15 @@ let currentProduct = null;
 let currentImageIndex = 0;
 let adminTapCount = 0;
 let adminTapTimer = null;
-
-function getProducts() {
-  const raw = localStorage.getItem(STORAGE_KEYS.products);
-  if (!raw) return defaultProducts;
-  try {
-    const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) && parsed.length ? parsed : defaultProducts;
-  } catch {
-    return defaultProducts;
-  }
-}
-
-function saveProducts(products) {
-  localStorage.setItem(STORAGE_KEYS.products, JSON.stringify(products));
-}
-
-function isAdminLoggedIn() {
-  return localStorage.getItem(STORAGE_KEYS.auth) === "true";
-}
-
-function applyTranslations(lang) {
-  document.body.dataset.lang = lang;
-  document.documentElement.lang = lang === "ko" ? "ko" : "zh-CN";
-
-  document.querySelectorAll("[data-i18n]").forEach((node) => {
-    const value = translations[lang][node.dataset.i18n];
-    if (value) node.textContent = value;
-  });
-
-  document.querySelectorAll(".lang-button").forEach((button) => {
-    button.classList.toggle("is-active", button.dataset.lang === lang);
-  });
-
-  if (currentProduct) renderModal();
-}
+let productsCache = [...defaultProducts];
 
 function getProductText(field, product) {
-  const localized = product[field]?.[currentLang];
-  return localized || product[field]?.ko || "";
+  return product[field]?.[currentLang] || product[field]?.ko || "";
+}
+
+function setMessage(id, text) {
+  const node = document.getElementById(id);
+  if (node) node.textContent = text;
 }
 
 function createSoldOutBadge() {
@@ -283,12 +262,43 @@ function createSoldOutBadge() {
   return badge;
 }
 
+function normalizeProduct(row) {
+  return {
+    id: row.id,
+    createdAt: row.created_at,
+    label: row.label,
+    name: row.name,
+    description: row.description,
+    shortDescription: row.short_description,
+    price: row.price,
+    soldOut: row.sold_out,
+    images: row.images
+  };
+}
+
+async function fetchProducts() {
+  if (!supabaseClient) return;
+  const { data, error } = await supabaseClient
+    .from("products")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  if (Array.isArray(data) && data.length) {
+    productsCache = data.map(normalizeProduct);
+  }
+}
+
 function renderHomePreview() {
   const container = document.getElementById("home-preview-list");
   if (!container) return;
   container.innerHTML = "";
 
-  getProducts().slice(0, 2).forEach((product) => {
+  productsCache.slice(0, 2).forEach((product) => {
     const article = document.createElement("article");
     article.className = `product-preview-card${product.soldOut ? " is-soldout" : ""}`;
     article.innerHTML = `
@@ -299,10 +309,14 @@ function renderHomePreview() {
         <span>${getProductText("price", product)}</span>
       </div>
     `;
-    if (product.soldOut) {
-      article.querySelector("div").prepend(createSoldOutBadge());
-    }
+    if (product.soldOut) article.querySelector("div").prepend(createSoldOutBadge());
     container.appendChild(article);
+  });
+}
+
+function bindProductModalTriggers() {
+  document.querySelectorAll("[data-modal-product]").forEach((trigger) => {
+    trigger.onclick = () => openModal(trigger.dataset.modalProduct);
   });
 }
 
@@ -311,7 +325,7 @@ function renderProductList() {
   if (!container) return;
   container.innerHTML = "";
 
-  getProducts().forEach((product) => {
+  productsCache.forEach((product) => {
     const article = document.createElement("article");
     article.className = `product-tile${product.soldOut ? " is-soldout" : ""}`;
     article.innerHTML = `
@@ -336,16 +350,23 @@ function renderProductList() {
   bindProductModalTriggers();
 }
 
-function bindProductModalTriggers() {
-  document.querySelectorAll("[data-modal-product]").forEach((trigger) => {
-    trigger.onclick = () => openModal(trigger.dataset.modalProduct);
+function applyTranslations(lang) {
+  document.body.dataset.lang = lang;
+  document.documentElement.lang = lang === "ko" ? "ko" : "zh-CN";
+  document.querySelectorAll("[data-i18n]").forEach((node) => {
+    const value = translations[lang][node.dataset.i18n];
+    if (value) node.textContent = value;
   });
+  document.querySelectorAll(".lang-button").forEach((button) => {
+    button.classList.toggle("is-active", button.dataset.lang === lang);
+  });
+  if (currentProduct) renderModal();
 }
 
 function openModal(productId) {
   const modal = document.getElementById("product-modal");
   if (!modal) return;
-  currentProduct = getProducts().find((item) => item.id === productId) || null;
+  currentProduct = productsCache.find((item) => item.id === productId) || null;
   currentImageIndex = 0;
   if (!currentProduct) return;
   renderModal();
@@ -389,33 +410,21 @@ function moveImage(direction) {
   renderModal();
 }
 
-function readFilesAsDataUrls(files) {
-  return Promise.all(
-    Array.from(files).map((file) =>
-      new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(String(reader.result));
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-      })
-    )
-  );
+async function getAdminSession() {
+  if (!supabaseClient) return null;
+  const { data } = await supabaseClient.auth.getSession();
+  return data.session;
 }
 
-function setMessage(id, text) {
-  const node = document.getElementById(id);
-  if (node) node.textContent = text;
-}
-
-function renderAdminPanel() {
+async function renderAdminPanel() {
   const authSection = document.getElementById("admin-auth");
   const panelSection = document.getElementById("admin-panel");
   if (!authSection || !panelSection) return;
 
-  const loggedIn = isAdminLoggedIn();
-  authSection.classList.toggle("hidden", loggedIn);
-  panelSection.classList.toggle("hidden", !loggedIn);
-  if (loggedIn) renderAdminProducts();
+  const session = await getAdminSession();
+  authSection.classList.toggle("hidden", Boolean(session));
+  panelSection.classList.toggle("hidden", !session);
+  if (session) renderAdminProducts();
 }
 
 function renderAdminProducts() {
@@ -423,7 +432,7 @@ function renderAdminProducts() {
   if (!container) return;
   container.innerHTML = "";
 
-  getProducts().forEach((product) => {
+  productsCache.forEach((product) => {
     const card = document.createElement("article");
     card.className = "admin-product-card";
     card.innerHTML = `
@@ -445,52 +454,93 @@ function renderAdminProducts() {
   });
 
   container.querySelectorAll("[data-toggle-soldout]").forEach((button) => {
-    button.onclick = () => {
+    button.onclick = async () => {
       const id = button.dataset.toggleSoldout;
-      const updated = getProducts().map((product) =>
-        product.id === id ? { ...product, soldOut: !product.soldOut } : product
-      );
-      saveProducts(updated);
-      renderAdminProducts();
-      renderProductList();
-      renderHomePreview();
+      const product = productsCache.find((item) => item.id === id);
+      if (!product || !supabaseClient) return;
+      const { error } = await supabaseClient
+        .from("products")
+        .update({ sold_out: !product.soldOut })
+        .eq("id", id);
+      if (error) {
+        setMessage("product-message", translations[currentLang]["admin.syncError"]);
+        return;
+      }
+      await refreshProducts();
     };
   });
 }
 
-function setupAdminPage() {
+async function uploadImages(files) {
+  if (!supabaseClient) return [];
+  const uploads = [];
+
+  for (const file of Array.from(files)) {
+    const cleanName = file.name.replace(/[^a-zA-Z0-9.\-_]/g, "-");
+    const path = `${Date.now()}-${cleanName}`;
+    const { error } = await supabaseClient.storage.from("products").upload(path, file);
+    if (error) throw error;
+    const { data } = supabaseClient.storage.from("products").getPublicUrl(path);
+    uploads.push(data.publicUrl);
+  }
+
+  return uploads;
+}
+
+async function refreshProducts() {
+  await fetchProducts();
+  renderHomePreview();
+  renderProductList();
+  renderAdminProducts();
+}
+
+async function setupAdminPage() {
   const loginForm = document.getElementById("login-form");
   const productForm = document.getElementById("product-form");
   const logoutButton = document.getElementById("logout-button");
-  renderAdminPanel();
+  await renderAdminPanel();
 
   if (loginForm) {
-    loginForm.addEventListener("submit", (event) => {
+    loginForm.addEventListener("submit", async (event) => {
       event.preventDefault();
       const id = document.getElementById("admin-id").value.trim();
       const password = document.getElementById("admin-password").value;
-      if (id === ADMIN_CREDENTIALS.id && password === ADMIN_CREDENTIALS.password) {
-        localStorage.setItem(STORAGE_KEYS.auth, "true");
-        setMessage("login-message", translations[currentLang]["admin.loginSuccess"]);
-        renderAdminPanel();
-      } else {
+      if (id !== ADMIN_AUTH.username || !supabaseClient) {
         setMessage("login-message", translations[currentLang]["admin.loginError"]);
+        return;
       }
+
+      const { error } = await supabaseClient.auth.signInWithPassword({
+        email: ADMIN_AUTH.email,
+        password
+      });
+
+      if (error) {
+        setMessage("login-message", translations[currentLang]["admin.loginError"]);
+        return;
+      }
+
+      setMessage("login-message", translations[currentLang]["admin.loginSuccess"]);
+      await renderAdminPanel();
     });
   }
 
   if (logoutButton) {
-    logoutButton.addEventListener("click", () => {
-      localStorage.removeItem(STORAGE_KEYS.auth);
+    logoutButton.addEventListener("click", async () => {
+      if (!supabaseClient) return;
+      await supabaseClient.auth.signOut();
       setMessage("product-message", translations[currentLang]["admin.logoutDone"]);
-      renderAdminPanel();
+      await renderAdminPanel();
     });
   }
 
   if (productForm) {
     productForm.addEventListener("submit", async (event) => {
       event.preventDefault();
-      if (!isAdminLoggedIn()) return;
+      if (!supabaseClient) return;
+
+      const session = await getAdminSession();
+      if (!session) return;
 
       const imageInput = document.getElementById("product-images");
       if (!imageInput.files || !imageInput.files.length) {
@@ -498,42 +548,46 @@ function setupAdminPage() {
         return;
       }
 
-      const images = await readFilesAsDataUrls(imageInput.files);
-      const now = new Date().toISOString();
-      const product = {
-        id: `product-${Date.now()}`,
-        createdAt: now,
-        label: {
-          ko: document.getElementById("label-ko").value.trim() || "New",
-          zh: document.getElementById("label-zh").value.trim() || document.getElementById("label-ko").value.trim() || "New"
-        },
-        name: {
-          ko: document.getElementById("name-ko").value.trim(),
-          zh: document.getElementById("name-zh").value.trim() || document.getElementById("name-ko").value.trim()
-        },
-        description: {
-          ko: document.getElementById("desc-ko").value.trim(),
-          zh: document.getElementById("desc-zh").value.trim() || document.getElementById("desc-ko").value.trim()
-        },
-        shortDescription: {
-          ko: document.getElementById("desc-ko").value.trim(),
-          zh: document.getElementById("desc-zh").value.trim() || document.getElementById("desc-ko").value.trim()
-        },
-        price: {
-          ko: document.getElementById("price-ko").value.trim(),
-          zh: document.getElementById("price-zh").value.trim() || document.getElementById("price-ko").value.trim()
-        },
-        soldOut: false,
-        images
-      };
+      try {
+        const images = await uploadImages(imageInput.files);
+        const now = new Date().toISOString();
+        const product = {
+          id: `product-${Date.now()}`,
+          created_at: now,
+          label: {
+            ko: document.getElementById("label-ko").value.trim() || "New",
+            zh: document.getElementById("label-zh").value.trim() || document.getElementById("label-ko").value.trim() || "New"
+          },
+          name: {
+            ko: document.getElementById("name-ko").value.trim(),
+            zh: document.getElementById("name-zh").value.trim() || document.getElementById("name-ko").value.trim()
+          },
+          description: {
+            ko: document.getElementById("desc-ko").value.trim(),
+            zh: document.getElementById("desc-zh").value.trim() || document.getElementById("desc-ko").value.trim()
+          },
+          short_description: {
+            ko: document.getElementById("desc-ko").value.trim(),
+            zh: document.getElementById("desc-zh").value.trim() || document.getElementById("desc-ko").value.trim()
+          },
+          price: {
+            ko: document.getElementById("price-ko").value.trim(),
+            zh: document.getElementById("price-zh").value.trim() || document.getElementById("price-ko").value.trim()
+          },
+          sold_out: false,
+          images
+        };
 
-      const updated = [product, ...getProducts()];
-      saveProducts(updated);
-      productForm.reset();
-      setMessage("product-message", translations[currentLang]["admin.productSaved"]);
-      renderAdminProducts();
-      renderProductList();
-      renderHomePreview();
+        const { error } = await supabaseClient.from("products").insert(product);
+        if (error) throw error;
+
+        productForm.reset();
+        setMessage("product-message", translations[currentLang]["admin.productSaved"]);
+        await refreshProducts();
+      } catch (error) {
+        console.error(error);
+        setMessage("product-message", translations[currentLang]["admin.syncError"]);
+      }
     });
   }
 }
@@ -551,7 +605,6 @@ function setupHiddenAdminEntry() {
     }, 2200);
 
     if (adminTapCount >= 5) {
-      event.preventDefault();
       adminTapCount = 0;
       window.location.href = "./admin.html";
     }
@@ -586,9 +639,16 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "ArrowRight") moveImage(1);
 });
 
-applyTranslations(currentLang);
-renderHomePreview();
-renderProductList();
-bindProductModalTriggers();
-setupAdminPage();
-setupHiddenAdminEntry();
+async function initializeApp() {
+  applyTranslations(currentLang);
+  renderHomePreview();
+  renderProductList();
+  bindProductModalTriggers();
+  setupHiddenAdminEntry();
+  await fetchProducts();
+  renderHomePreview();
+  renderProductList();
+  await setupAdminPage();
+}
+
+initializeApp();

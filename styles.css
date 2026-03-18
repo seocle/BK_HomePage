@@ -389,6 +389,11 @@ a {
   border-color: var(--line);
 }
 
+.button-danger {
+  color: #9d2c25;
+  border-color: rgba(157, 44, 37, 0.18);
+}
+
 .button.full {
   width: 100%;
 }

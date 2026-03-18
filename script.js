@@ -128,6 +128,11 @@ const translations = {
     "admin.currentTitle": "등록 상품",
     "admin.toggleSoldOut": "품절 처리",
     "admin.toggleOnSale": "판매중으로 변경",
+    "admin.hide": "숨김 처리",
+    "admin.show": "다시 노출",
+    "admin.delete": "삭제",
+    "admin.hidden": "숨김",
+    "admin.productDeleted": "상품이 삭제되었습니다.",
     "admin.loginError": "아이디 또는 비밀번호가 다르거나 관리자 계정이 아직 생성되지 않았습니다.",
     "admin.loginSuccess": "로그인되었습니다.",
     "admin.productSaved": "상품이 등록되었습니다.",
@@ -212,6 +217,11 @@ const translations = {
     "admin.currentTitle": "已登记商品",
     "admin.toggleSoldOut": "标记售罄",
     "admin.toggleOnSale": "恢复销售",
+    "admin.hide": "隐藏",
+    "admin.show": "重新显示",
+    "admin.delete": "删除",
+    "admin.hidden": "隐藏",
+    "admin.productDeleted": "商品已删除。",
     "admin.loginError": "账号或密码错误，或管理员账号尚未创建。",
     "admin.loginSuccess": "已登录。",
     "admin.productSaved": "商品已保存。",
@@ -263,6 +273,7 @@ function normalizeProduct(row) {
     shortDescription: row.short_description,
     category: row.category || "outer",
     isNew: Boolean(row.is_new),
+    hidden: Boolean(row.hidden),
     price: row.price,
     soldOut: row.sold_out,
     images: row.images
@@ -276,12 +287,13 @@ function getCurrentFilter() {
 
 function getFilteredProducts() {
   const filter = getCurrentFilter();
-  if (filter === "new") return productsCache.filter((product) => product.isNew);
-  return productsCache.filter((product) => product.category === filter);
+  const visibleProducts = productsCache.filter((product) => !product.hidden);
+  if (filter === "new") return visibleProducts.filter((product) => product.isNew);
+  return visibleProducts.filter((product) => product.category === filter);
 }
 
 function getHeroProducts() {
-  return productsCache.filter((product) => product.isNew && Array.isArray(product.images) && product.images.length);
+  return productsCache.filter((product) => !product.hidden && product.isNew && Array.isArray(product.images) && product.images.length);
 }
 
 function shuffleProducts(products) {
@@ -329,7 +341,7 @@ function renderHomePreview() {
   if (!container) return;
   container.innerHTML = "";
 
-  productsCache.filter((product) => product.isNew).slice(0, 2).forEach((product) => {
+  productsCache.filter((product) => !product.hidden && product.isNew).slice(0, 2).forEach((product) => {
     const button = document.createElement("button");
     button.type = "button";
     button.className = `product-preview-card product-preview-button${product.soldOut ? " is-soldout" : ""}`;
@@ -609,12 +621,18 @@ function renderAdminProducts() {
         <div class="admin-product-meta">
           <strong>${product.name.ko}</strong>
           <span>${product.price.ko}</span>
-          <span>${product.soldOut ? translations[currentLang]["products.soldOut"] : CATEGORY_META[product.category]?.label.ko || ""}${product.isNew ? " · " + CATEGORY_META.new.label.ko : ""}</span>
+          <span>${product.soldOut ? translations[currentLang]["products.soldOut"] : CATEGORY_META[product.category]?.label.ko || ""}${product.isNew ? " · " + CATEGORY_META.new.label.ko : ""}${product.hidden ? " · " + translations[currentLang]["admin.hidden"] : ""}</span>
         </div>
       </div>
       <div class="admin-product-actions">
         <button class="button button-light" type="button" data-toggle-soldout="${product.id}">
           ${product.soldOut ? translations[currentLang]["admin.toggleOnSale"] : translations[currentLang]["admin.toggleSoldOut"]}
+        </button>
+        <button class="button button-light" type="button" data-toggle-hidden="${product.id}">
+          ${product.hidden ? translations[currentLang]["admin.show"] : translations[currentLang]["admin.hide"]}
+        </button>
+        <button class="button button-light button-danger" type="button" data-delete-product="${product.id}">
+          ${translations[currentLang]["admin.delete"]}
         </button>
       </div>
     `;
@@ -637,6 +655,42 @@ function renderAdminProducts() {
       await refreshProducts();
     };
   });
+
+  container.querySelectorAll("[data-toggle-hidden]").forEach((button) => {
+    button.onclick = async () => {
+      const id = button.dataset.toggleHidden;
+      const product = productsCache.find((item) => item.id === id);
+      if (!product || !supabaseClient) return;
+      const { error } = await supabaseClient
+        .from("products")
+        .update({ hidden: !product.hidden })
+        .eq("id", id);
+      if (error) {
+        setMessage("product-message", translations[currentLang]["admin.syncError"]);
+        return;
+      }
+      await refreshProducts();
+    };
+  });
+
+  container.querySelectorAll("[data-delete-product]").forEach((button) => {
+    button.onclick = async () => {
+      const id = button.dataset.deleteProduct;
+      const product = productsCache.find((item) => item.id === id);
+      if (!product || !supabaseClient) return;
+
+      try {
+        await deleteProductImages(product.images);
+        const { error } = await supabaseClient.from("products").delete().eq("id", id);
+        if (error) throw error;
+        setMessage("product-message", translations[currentLang]["admin.productDeleted"]);
+        await refreshProducts();
+      } catch (error) {
+        console.error(error);
+        setMessage("product-message", translations[currentLang]["admin.syncError"]);
+      }
+    };
+  });
 }
 
 async function uploadImages(files) {
@@ -651,6 +705,22 @@ async function uploadImages(files) {
     uploads.push(data.publicUrl);
   }
   return uploads;
+}
+
+function getStoragePathFromPublicUrl(url) {
+  if (!url) return null;
+  const marker = "/storage/v1/object/public/products/";
+  const pathIndex = url.indexOf(marker);
+  if (pathIndex === -1) return null;
+  return decodeURIComponent(url.slice(pathIndex + marker.length));
+}
+
+async function deleteProductImages(images) {
+  if (!supabaseClient || !Array.isArray(images) || !images.length) return;
+  const paths = images.map(getStoragePathFromPublicUrl).filter(Boolean);
+  if (!paths.length) return;
+  const { error } = await supabaseClient.storage.from("products").remove(paths);
+  if (error) throw error;
 }
 
 async function refreshProducts() {
@@ -737,6 +807,7 @@ async function setupAdminPage() {
           },
           category,
           is_new: document.getElementById("is-new").checked,
+          hidden: false,
           price: {
             ko: document.getElementById("price-ko").value.trim(),
             zh: document.getElementById("price-zh").value.trim() || document.getElementById("price-ko").value.trim()

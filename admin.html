@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>B&amp;K | 관리자</title>
+  <meta name="description" content="B&K 관리자 페이지">
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body data-page="admin">
+  <div class="mobile-shell">
+    <header class="topbar">
+      <a class="brand" href="./index.html">B&amp;K</a>
+      <div class="topbar-actions">
+        <a class="admin-link admin-link-current" href="./admin.html">Admin</a>
+        <div class="lang-switch" aria-label="language switch">
+          <button class="lang-button is-active" type="button" data-lang="ko">KR</button>
+          <button class="lang-button" type="button" data-lang="zh">CN</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="page">
+      <section class="page-intro">
+        <p class="eyebrow" data-i18n="admin.eyebrow">ADMIN</p>
+        <h1 class="page-title" data-i18n="admin.title">신상품 관리</h1>
+        <p class="page-text" data-i18n="admin.description">로그인 후 모바일에서 상품 등록과 품절 처리를 할 수 있습니다.</p>
+      </section>
+
+      <section class="admin-auth" id="admin-auth">
+        <form class="auth-card" id="login-form">
+          <label class="field">
+            <span data-i18n="admin.idLabel">관리자 아이디</span>
+            <input id="admin-id" name="admin-id" type="text" autocomplete="username" required>
+          </label>
+          <label class="field">
+            <span data-i18n="admin.passwordLabel">비밀번호</span>
+            <input id="admin-password" name="admin-password" type="password" autocomplete="current-password" required>
+          </label>
+          <button class="button button-dark full" type="submit" data-i18n="admin.login">로그인</button>
+          <p class="form-message" id="login-message"></p>
+        </form>
+      </section>
+
+      <section class="admin-panel hidden" id="admin-panel">
+        <div class="admin-toolbar">
+          <p class="page-text" data-i18n="admin.welcome">관리자 로그인 상태입니다.</p>
+          <button class="button button-light" id="logout-button" type="button" data-i18n="admin.logout">로그아웃</button>
+        </div>
+
+        <form class="admin-form" id="product-form">
+          <label class="field">
+            <span data-i18n="admin.nameKo">상품명(KR)</span>
+            <input id="name-ko" type="text" required>
+          </label>
+          <label class="field">
+            <span data-i18n="admin.nameZh">상품명(CN)</span>
+            <input id="name-zh" type="text">
+          </label>
+          <label class="field">
+            <span data-i18n="admin.priceKo">가격(KR)</span>
+            <input id="price-ko" type="text" placeholder="예: 39,000원" required>
+          </label>
+          <label class="field">
+            <span data-i18n="admin.priceZh">가격(CN)</span>
+            <input id="price-zh" type="text" placeholder="예: 39,000韩元">
+          </label>
+          <label class="field">
+            <span data-i18n="admin.descKo">설명(KR)</span>
+            <textarea id="desc-ko" rows="3" required></textarea>
+          </label>
+          <label class="field">
+            <span data-i18n="admin.descZh">설명(CN)</span>
+            <textarea id="desc-zh" rows="3"></textarea>
+          </label>
+          <label class="field">
+            <span data-i18n="admin.labelKo">카테고리(KR)</span>
+            <input id="label-ko" type="text" placeholder="예: Blouse">
+          </label>
+          <label class="field">
+            <span data-i18n="admin.labelZh">카테고리(CN)</span>
+            <input id="label-zh" type="text" placeholder="예: Blouse">
+          </label>
+          <label class="field">
+            <span data-i18n="admin.images">상품 이미지</span>
+            <input id="product-images" type="file" accept="image/*" multiple required>
+          </label>
+          <button class="button button-dark full" type="submit" data-i18n="admin.addProduct">상품 등록</button>
+          <p class="form-message" id="product-message"></p>
+        </form>
+
+        <section class="admin-products">
+          <div class="section-head compact">
+            <div>
+              <p class="section-label" data-i18n="admin.currentLabel">Products</p>
+              <h2 data-i18n="admin.currentTitle">등록 상품</h2>
+            </div>
+          </div>
+          <div class="admin-product-list" id="admin-product-list"></div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+</html>

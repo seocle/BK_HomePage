@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>B&amp;K | 여성의류 도매</title>
+  <meta name="description" content="B&K 여성의류 도매. 신상품 확인 후 카카오톡과 위챗 QR로 바로 문의할 수 있습니다.">
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body data-page="home">
+  <div class="mobile-shell">
+    <header class="topbar">
+      <a class="brand" href="./index.html">B&amp;K</a>
+      <div class="topbar-actions">
+        <a class="admin-link" href="./admin.html">Admin</a>
+        <div class="lang-switch" aria-label="language switch">
+          <button class="lang-button is-active" type="button" data-lang="ko">KR</button>
+          <button class="lang-button" type="button" data-lang="zh">CN</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="page page-home">
+      <section class="hero-card">
+        <div class="hero-copy">
+          <p class="eyebrow" data-i18n="home.eyebrow">B&amp;K WOMEN'S WHOLESALE</p>
+          <h1 data-i18n="home.title">잘 팔리는 여성의류를 빠르게 제안합니다</h1>
+          <p class="hero-description" data-i18n="home.description">신상품 확인부터 카카오톡, 위챗 문의까지 모바일에서 바로 이어집니다.</p>
+          <div class="hero-links">
+            <a class="button button-dark" href="./new.html" data-i18n="home.primary">신상품 보기</a>
+            <a class="button button-light" href="./contact.html" data-i18n="home.secondary">문의하기</a>
+          </div>
+        </div>
+        <div class="hero-image">
+          <img src="./Image/의류/반달포켓점퍼_52000원/KakaoTalk_20260319_014656878.jpg" alt="B&K 대표 상품 이미지">
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <p class="section-label" data-i18n="home.categoryLabel">Category</p>
+          <h2 data-i18n="home.categoryTitle">주력 카테고리</h2>
+        </div>
+        <div class="stack-grid">
+          <article class="info-card">
+            <strong data-i18n="home.category1">아우터</strong>
+            <p data-i18n="home.category1Text">점퍼, 자켓 등 판매 반응이 빠른 시즌 아우터</p>
+          </article>
+          <article class="info-card">
+            <strong data-i18n="home.category2">블라우스</strong>
+            <p data-i18n="home.category2Text">단품 진열에 강한 여성 상의 라인</p>
+          </article>
+          <article class="info-card">
+            <strong data-i18n="home.category3">여성 토탈의류</strong>
+            <p data-i18n="home.category3Text">소매 매장과 해외 바이어 상담에 맞춘 셀렉션</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head compact">
+          <div>
+            <p class="section-label" data-i18n="home.newLabel">New</p>
+            <h2 data-i18n="home.newTitle">이번 신상품</h2>
+          </div>
+          <a class="inline-link" href="./new.html" data-i18n="home.newMore">전체 보기</a>
+        </div>
+        <div class="product-preview" id="home-preview-list"></div>
+      </section>
+
+      <section class="section">
+        <div class="contact-banner">
+          <p class="section-label" data-i18n="home.contactLabel">Contact</p>
+          <h2 data-i18n="home.contactTitle">상담은 QR로 간단하게</h2>
+          <p data-i18n="home.contactText">국내는 카카오톡, 해외 바이어는 위챗으로 바로 연결할 수 있습니다.</p>
+          <a class="button button-dark full" href="./contact.html" data-i18n="home.contactButton">QR 확인하기</a>
+        </div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav">
+      <a class="bottom-link is-active" href="./index.html" data-i18n="nav.home">홈</a>
+      <a class="bottom-link" href="./new.html" data-i18n="nav.new">신상품</a>
+      <a class="bottom-link" href="./store.html" data-i18n="nav.store">매장안내</a>
+      <a class="bottom-link" href="./contact.html" data-i18n="nav.contact">문의</a>
+    </nav>
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+</html>

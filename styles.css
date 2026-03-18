@@ -483,17 +483,14 @@ a {
 
 .bottom-nav {
   position: fixed;
-  left: 0;
+  left: 50%;
   bottom: 14px;
-  right: 0;
-  transform: none;
+  transform: translateX(-50%);
   z-index: 30;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 8px;
-  width: 100%;
-  max-width: 520px;
-  margin: 0 auto;
+  width: min(calc(100% - 24px), 520px);
   padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
   border-top: 1px solid var(--line);
   border-radius: 22px 22px 0 0;

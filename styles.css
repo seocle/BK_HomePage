@@ -343,6 +343,11 @@ a {
   color: inherit;
 }
 
+.info-card-link strong,
+.info-card-link p {
+  text-decoration: none;
+}
+
 .hero-links,
 .modal-actions {
   display: grid;

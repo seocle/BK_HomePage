@@ -757,6 +757,7 @@ async function initializeApp() {
   bindProductModalTriggers();
   setupHiddenAdminEntry();
   await fetchProducts();
+  startHeroRotation();
   renderHomePreview();
   renderCatalogHeader();
   renderProductList();

@@ -83,6 +83,7 @@ a {
   font-size: 1.95rem;
   letter-spacing: 0.08em;
   font-weight: 700;
+  user-select: none;
 }
 
 .lang-switch {
@@ -158,8 +159,7 @@ a {
 }
 
 .hero-image img,
-.tile-image img,
-.modal-sheet img {
+.tile-image img {
   width: 100%;
   aspect-ratio: 4 / 5;
   object-fit: cover;
@@ -419,8 +419,16 @@ a {
   left: 12px;
   right: 12px;
   bottom: 12px;
-  overflow: hidden;
+  max-height: calc(100vh - 24px);
+  overflow: auto;
   background: var(--surface-strong);
+}
+
+#modal-image {
+  width: 100%;
+  max-height: min(52vh, 460px);
+  object-fit: contain;
+  background: #efe7db;
 }
 
 .modal-close {
@@ -581,6 +589,7 @@ a {
     left: 50%;
     right: auto;
     width: min(880px, calc(100vw - 40px));
+    max-height: min(88vh, 760px);
     transform: translate(-50%, -50%);
     display: grid;
     grid-template-columns: 1fr 0.9fr;

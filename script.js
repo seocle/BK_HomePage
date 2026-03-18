@@ -233,6 +233,8 @@ const savedLang = localStorage.getItem(STORAGE_KEYS.lang);
 let currentLang = savedLang && translations[savedLang] ? savedLang : "ko";
 let currentProduct = null;
 let currentImageIndex = 0;
+let adminTapCount = 0;
+let adminTapTimer = null;
 
 function getProducts() {
   const raw = localStorage.getItem(STORAGE_KEYS.products);
@@ -536,6 +538,26 @@ function setupAdminPage() {
   }
 }
 
+function setupHiddenAdminEntry() {
+  const trigger = document.querySelector("[data-admin-trigger='true']");
+  if (!trigger || document.body.dataset.page === "admin") return;
+
+  trigger.addEventListener("click", (event) => {
+    event.preventDefault();
+    adminTapCount += 1;
+    if (adminTapTimer) window.clearTimeout(adminTapTimer);
+    adminTapTimer = window.setTimeout(() => {
+      adminTapCount = 0;
+    }, 2200);
+
+    if (adminTapCount >= 5) {
+      event.preventDefault();
+      adminTapCount = 0;
+      window.location.href = "./admin.html";
+    }
+  });
+}
+
 document.querySelectorAll(".lang-button").forEach((button) => {
   button.addEventListener("click", () => {
     currentLang = button.dataset.lang;
@@ -569,3 +591,4 @@ renderHomePreview();
 renderProductList();
 bindProductModalTriggers();
 setupAdminPage();
+setupHiddenAdminEntry();

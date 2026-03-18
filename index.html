@@ -24,7 +24,6 @@
     </header>
 
     <section class="shortcut-strip">
-      <p class="shortcut-copy" data-i18n="home.shortcutCopy">리테일 셀렉션 BEST 상품 모음전</p>
       <nav class="icon-category-nav" id="home-category-nav">
         <a class="icon-category-link" href="./new.html?filter=new">
           <span class="icon-circle"><img src="./Image/Category/new.svg" alt=""></span>
@@ -47,13 +46,14 @@
 
     <main class="page page-home">
       <section class="hero-card hero-card-promo">
-        <div class="hero-promo-image" id="hero-rotator">
-          <img class="hero-slide is-active" id="hero-image-primary" src="" alt="B&K 대표 상품 이미지">
-          <img class="hero-slide" id="hero-image-secondary" src="" alt="">
-        </div>
+        <a class="hero-promo-image" id="hero-image-link" href="./new.html?filter=new">
+          <div id="hero-rotator">
+            <img class="hero-slide is-active" id="hero-image-primary" src="" alt="B&K 대표 상품 이미지">
+            <img class="hero-slide" id="hero-image-secondary" src="" alt="">
+          </div>
+        </a>
         <div class="hero-promo-copy">
           <span class="promo-badge" data-i18n="home.promoBadge">NEW ARRIVALS</span>
-          <h1 class="promo-title">B&amp;K</h1>
           <p class="hero-description" data-i18n="home.description">신상품 확인부터 카카오톡, 위챗 문의까지 모바일에서 바로 이어집니다.</p>
           <div class="hero-links">
             <a class="button button-dark" href="./new.html?filter=new" data-i18n="home.primary">신상품 보기</a>
@@ -68,18 +68,18 @@
           <h2 data-i18n="home.categoryTitle">주력 카테고리</h2>
         </div>
         <div class="stack-grid">
-          <article class="info-card">
+          <a class="info-card info-card-link" href="./new.html?filter=outer">
             <strong data-i18n="home.category1">아우터</strong>
             <p data-i18n="home.category1Text">점퍼, 자켓 등 판매 반응이 빠른 시즌 아우터</p>
-          </article>
-          <article class="info-card">
+          </a>
+          <a class="info-card info-card-link" href="./new.html?filter=blouse-shirt">
             <strong data-i18n="home.category2">블라우스</strong>
             <p data-i18n="home.category2Text">단품 진열에 강한 여성 상의 라인</p>
-          </article>
-          <article class="info-card">
+          </a>
+          <a class="info-card info-card-link" href="./new.html?filter=tshirt">
             <strong data-i18n="home.category3">여성 토탈의류</strong>
             <p data-i18n="home.category3Text">소매 매장과 해외 바이어 상담에 맞춘 셀렉션</p>
-          </article>
+          </a>
         </div>
       </section>
 

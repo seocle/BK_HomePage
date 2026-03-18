@@ -345,22 +345,19 @@ function renderHomePreview() {
 }
 
 function renderHeroCopy() {
-  const title = document.querySelector(".promo-title");
   const description = document.querySelector(".hero-description");
-  if (!title || !description) return;
+  const heroLink = document.getElementById("hero-image-link");
+  if (!description || !heroLink) return;
 
   const activeProduct = heroProducts[heroRotationIndex];
   if (!activeProduct) {
-    title.textContent = "B&K";
     description.textContent = translations[currentLang]["home.description"];
+    heroLink.href = "./new.html?filter=new";
     return;
   }
 
-  title.textContent = getProductText("name", activeProduct) || "B&K";
-  description.textContent =
-    getProductText("shortDescription", activeProduct)
-    || getProductText("description", activeProduct)
-    || translations[currentLang]["home.description"];
+  description.textContent = translations[currentLang]["home.description"];
+  heroLink.href = `./new.html?filter=${activeProduct.category || "new"}`;
 }
 
 function renderHeroImage(imageUrl, isInitial = false) {

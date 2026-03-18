@@ -326,6 +326,13 @@ a {
   line-height: 0.96;
 }
 
+#catalog-title {
+  font-size: clamp(1.9rem, 7.2vw, 2.8rem);
+  line-height: 1.02;
+  word-break: keep-all;
+  overflow-wrap: normal;
+}
+
 .eyebrow,
 .section-label,
 .card-label {

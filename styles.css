@@ -1,13 +1,13 @@
 :root {
-  --bg: #f5f0e7;
-  --surface: rgba(255, 250, 244, 0.88);
-  --surface-strong: #fffaf4;
-  --text: #1f1a15;
-  --muted: #74685d;
-  --line: rgba(31, 26, 21, 0.1);
-  --accent: #7f674b;
-  --accent-strong: #58442f;
-  --shadow: 0 18px 40px rgba(37, 28, 19, 0.08);
+  --bg: #251f1a;
+  --surface: rgba(49, 40, 33, 0.82);
+  --surface-strong: #30261f;
+  --text: #f3e8dc;
+  --muted: #cdbba8;
+  --line: rgba(243, 232, 220, 0.08);
+  --accent: #d4b89b;
+  --accent-strong: #f0dcc7;
+  --shadow: 0 24px 54px rgba(0, 0, 0, 0.28);
 }
 
 * {
@@ -23,8 +23,9 @@ body {
   color: var(--text);
   font-family: "Noto Sans KR", "Noto Sans SC", sans-serif;
   background:
-    radial-gradient(circle at top, rgba(255, 255, 255, 0.72), transparent 38%),
-    linear-gradient(180deg, #eee6da 0%, #f8f4ee 100%);
+    radial-gradient(circle at top, rgba(96, 74, 54, 0.34), transparent 34%),
+    radial-gradient(circle at 50% 20%, rgba(113, 87, 62, 0.18), transparent 30%),
+    linear-gradient(180deg, #1d1713 0%, #241d18 45%, #1a1511 100%);
 }
 
 body[data-lang="zh"] {
@@ -59,7 +60,7 @@ a {
   padding: 14px 16px;
   border: 1px solid var(--line);
   border-radius: 22px;
-  background: rgba(255, 250, 244, 0.82);
+  background: rgba(42, 34, 28, 0.78);
   backdrop-filter: blur(14px);
   box-shadow: var(--shadow);
 }
@@ -113,13 +114,14 @@ a {
   padding: 9px 12px;
   border: 1px solid var(--line);
   border-radius: 999px;
-  background: transparent;
+  background: rgba(255, 255, 255, 0.02);
   cursor: pointer;
+  color: var(--text);
 }
 
 .lang-button.is-active {
-  background: var(--text);
-  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--text);
 }
 
 .page {
@@ -158,6 +160,20 @@ a {
   padding: 22px;
 }
 
+.hero-logo-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 132px;
+}
+
+.hero-logo {
+  width: min(100%, 320px);
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.22));
+}
+
 .hero-image img,
 .tile-image img {
   width: 100%;
@@ -165,7 +181,6 @@ a {
   object-fit: cover;
 }
 
-.hero-copy h1,
 .page-title {
   margin: 0;
   font-size: clamp(2.2rem, 8vw, 3.4rem);
@@ -215,12 +230,12 @@ a {
 }
 
 .button-dark {
-  background: var(--text);
-  color: #fff;
+  background: #090604;
+  color: #f8eee3;
 }
 
 .button-light {
-  background: rgba(255, 255, 255, 0.58);
+  background: rgba(255, 255, 255, 0.02);
   border-color: var(--line);
 }
 
@@ -322,7 +337,7 @@ a {
   min-height: 28px;
   padding: 0 10px;
   border-radius: 999px;
-  background: #c85f4b;
+  background: #b8644f;
   color: #fff;
   font-size: 0.78rem;
   font-weight: 700;
@@ -376,7 +391,7 @@ a {
   padding: 10px;
   border: 1px solid var(--line);
   border-radius: 26px;
-  background: rgba(255, 250, 244, 0.9);
+  background: rgba(47, 38, 31, 0.95);
   backdrop-filter: blur(18px);
   box-shadow: var(--shadow);
 }
@@ -393,8 +408,8 @@ a {
 }
 
 .bottom-link.is-active {
-  background: var(--text);
-  color: #fff;
+  background: #0f0906;
+  color: #f5e9dc;
 }
 
 .modal {
@@ -411,7 +426,7 @@ a {
 .modal-backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(20, 15, 11, 0.58);
+  background: rgba(7, 4, 3, 0.76);
 }
 
 .modal-sheet {
@@ -428,7 +443,7 @@ a {
   width: 100%;
   max-height: min(52vh, 460px);
   object-fit: contain;
-  background: #efe7db;
+  background: #2c241d;
 }
 
 .modal-close {
@@ -439,7 +454,8 @@ a {
   border: 0;
   padding: 10px 14px;
   border-radius: 999px;
-  background: rgba(255, 250, 244, 0.92);
+  background: rgba(54, 43, 35, 0.92);
+  color: var(--text);
   cursor: pointer;
 }
 
@@ -486,7 +502,7 @@ a {
   padding: 14px 16px;
   border: 1px solid var(--line);
   border-radius: 18px;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.05);
   color: var(--text);
 }
 

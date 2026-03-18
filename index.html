@@ -112,6 +112,25 @@
     </nav>
   </div>
 
+  <div class="modal" id="product-modal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-modal="true"></div>
+    <div class="modal-sheet" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button class="modal-close" type="button" data-close-modal="true" aria-label="닫기">닫기</button>
+      <img id="modal-image" src="" alt="">
+      <div class="modal-content">
+        <p class="section-label" id="modal-label"></p>
+        <h2 id="modal-title"></h2>
+        <p class="page-text" id="modal-description"></p>
+        <strong class="modal-price" id="modal-price"></strong>
+        <p class="modal-count" id="modal-count"></p>
+        <div class="modal-actions">
+          <button class="button button-light" id="prev-image" type="button" data-i18n="modal.prev">이전</button>
+          <button class="button button-dark" id="next-image" type="button" data-i18n="modal.next">다음</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="./script.js"></script>
 </body>

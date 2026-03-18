@@ -330,19 +330,23 @@ function renderHomePreview() {
   container.innerHTML = "";
 
   productsCache.filter((product) => product.isNew).slice(0, 2).forEach((product) => {
-    const article = document.createElement("article");
-    article.className = `product-preview-card${product.soldOut ? " is-soldout" : ""}`;
-    article.innerHTML = `
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = `product-preview-card product-preview-button${product.soldOut ? " is-soldout" : ""}`;
+    button.dataset.modalProduct = product.id;
+    button.innerHTML = `
       <img src="${product.images[0]}" alt="${getProductText("name", product)}">
-      <div>
+      <div class="product-preview-copy">
         ${product.soldOut ? createSoldOutBadge().outerHTML : ""}
         <strong>${getProductText("name", product)}</strong>
         <p>${getProductText("shortDescription", product) || getProductText("description", product)}</p>
         <span>${getProductText("price", product)}</span>
       </div>
     `;
-    container.appendChild(article);
+    container.appendChild(button);
   });
+
+  bindProductModalTriggers();
 }
 
 function renderHeroCopy() {

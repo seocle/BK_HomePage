@@ -26,9 +26,16 @@
     <main class="page">
       <section class="page-intro">
         <p class="eyebrow" data-i18n="new.eyebrow">NEW ARRIVALS</p>
-        <h1 class="page-title" data-i18n="new.title">신상품</h1>
-        <p class="page-text" data-i18n="new.description">상품 이미지를 눌러 상세 컷을 확인할 수 있습니다.</p>
+        <h1 class="page-title" id="catalog-title" data-i18n="new.title">신상품</h1>
+        <p class="page-text" id="catalog-description" data-i18n="new.description">상품 이미지를 눌러 상세 컷을 확인할 수 있습니다.</p>
       </section>
+
+      <nav class="category-nav category-nav-light" id="catalog-category-nav">
+        <a class="category-link" href="./new.html?filter=new" data-filter-link="new" data-i18n="navFilter.new">신상품</a>
+        <a class="category-link" href="./new.html?filter=outer" data-filter-link="outer" data-i18n="navFilter.outer">아우터</a>
+        <a class="category-link" href="./new.html?filter=blouse-shirt" data-filter-link="blouse-shirt" data-i18n="navFilter.blouseShirt">블라우스/셔츠</a>
+        <a class="category-link" href="./new.html?filter=tshirt" data-filter-link="tshirt" data-i18n="navFilter.tshirt">티셔츠</a>
+      </nav>
 
       <section class="product-list" id="product-list"></section>
     </main>

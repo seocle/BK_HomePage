@@ -12,6 +12,102 @@ const ADMIN_AUTH = {
   email: "cgh5454@bk-homepage.local"
 };
 
+const CATEGORY_META = {
+  new: {
+    label: { ko: "신상품", zh: "新品" },
+    title: { ko: "신상품", zh: "新品" },
+    description: {
+      ko: "최근 등록된 신상품만 모아볼 수 있습니다.",
+      zh: "这里显示最近登记的新品。"
+    }
+  },
+  outer: {
+    label: { ko: "아우터", zh: "外套" },
+    title: { ko: "아우터", zh: "外套" },
+    description: {
+      ko: "점퍼, 자켓 등 아우터 카테고리 상품입니다.",
+      zh: "这里显示夹克、外套等商品。"
+    }
+  },
+  "blouse-shirt": {
+    label: { ko: "블라우스/셔츠", zh: "衬衫/上衣" },
+    title: { ko: "블라우스/셔츠", zh: "衬衫/上衣" },
+    description: {
+      ko: "블라우스와 셔츠 카테고리 상품입니다.",
+      zh: "这里显示衬衫和上衣类商品。"
+    }
+  },
+  tshirt: {
+    label: { ko: "티셔츠", zh: "T恤" },
+    title: { ko: "티셔츠", zh: "T恤" },
+    description: {
+      ko: "티셔츠 카테고리 상품입니다.",
+      zh: "这里显示T恤类商品。"
+    }
+  }
+};
+
+const defaultProducts = [
+  {
+    id: "jumper",
+    createdAt: "2026-03-19T01:46:00+09:00",
+    label: { ko: "아우터", zh: "外套" },
+    name: { ko: "반달포켓점퍼", zh: "半月口袋夹克" },
+    description: {
+      ko: "구조감 있는 실루엣과 포켓 디테일이 돋보이는 데일리 점퍼",
+      zh: "立体版型搭配口袋细节，适合日常陈列与销售"
+    },
+    shortDescription: {
+      ko: "포켓 디테일이 살아있는 데일리 점퍼",
+      zh: "带有口袋细节的日常夹克"
+    },
+    category: "outer",
+    isNew: true,
+    price: { ko: "52,000원", zh: "52,000韩元" },
+    soldOut: false,
+    images: [
+      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%EB%B0%98%EB%8B%AC%ED%8F%AC%EC%BC%93%EC%A0%90%ED%8D%BC_52000%EC%9B%90/KakaoTalk_20260319_014656878.jpg",
+      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%EB%B0%98%EB%8B%AC%ED%8F%AC%EC%BC%93%EC%A0%90%ED%8D%BC_52000%EC%9B%90/KakaoTalk_20260319_014656878_01.jpg",
+      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%EB%B0%98%EB%8B%AC%ED%8F%AC%EC%BC%93%EC%A0%90%ED%8D%BC_52000%EC%9B%90/KakaoTalk_20260319_014656878_02.jpg",
+      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%EB%B0%98%EB%8B%AC%ED%8F%AC%EC%BC%93%EC%A0%90%ED%8D%BC_52000%EC%9B%90/KakaoTalk_20260319_014656878_03.jpg",
+      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%EB%B0%98%EB%8B%AC%ED%8F%AC%EC%BC%93%EC%A0%90%ED%8D%BC_52000%EC%9B%90/KakaoTalk_20260319_014656878_04.jpg",
+      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%EB%B0%98%EB%8B%AC%ED%8F%AC%EC%BC%93%EC%A0%90%ED%8D%BC_52000%EC%9B%90/KakaoTalk_20260319_014656878_05.jpg",
+      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%EB%B0%98%EB%8B%AC%ED%8F%AC%EC%BC%93%EC%A0%90%ED%8D%BC_52000%EC%9B%90/KakaoTalk_20260319_014656878_06.jpg",
+      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%EB%B0%98%EB%8B%AC%ED%8F%AC%EC%BC%93%EC%A0%90%ED%8D%BC_52000%EC%9B%90/KakaoTalk_20260319_014656878_07.jpg",
+      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%EB%B0%98%EB%8B%AC%ED%8F%AC%EC%BC%93%EC%A0%90%ED%8D%BC_52000%EC%9B%90/KakaoTalk_20260319_014656878_08.jpg",
+      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%EB%B0%98%EB%8B%AC%ED%8F%AC%EC%BC%93%EC%A0%90%ED%8D%BC_52000%EC%9B%90/KakaoTalk_20260319_014656878_09.jpg"
+    ]
+  },
+  {
+    id: "blouse",
+    createdAt: "2026-03-19T01:47:00+09:00",
+    label: { ko: "블라우스/셔츠", zh: "衬衫/上衣" },
+    name: { ko: "파스텔줄지블라우스", zh: "马卡龙条纹衬衫" },
+    description: {
+      ko: "부드러운 컬러감과 스트라이프 패턴이 매력적인 봄 시즌 블라우스",
+      zh: "柔和配色与条纹设计结合的春季女装上衣"
+    },
+    shortDescription: {
+      ko: "가볍게 보여주기 좋은 봄 블라우스",
+      zh: "适合春季陈列的轻盈上衣"
+    },
+    category: "blouse-shirt",
+    isNew: true,
+    price: { ko: "37,000원", zh: "37,000韩元" },
+    soldOut: false,
+    images: [
+      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%ED%8C%8C%EC%8A%A4%ED%85%94%EC%A4%84%EC%A7%80%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4_37000%EC%9B%90/KakaoTalk_20260319_014656878_10.jpg",
+      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%ED%8C%8C%EC%8A%A4%ED%85%94%EC%A4%84%EC%A7%80%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4_37000%EC%9B%90/KakaoTalk_20260319_014656878_11.jpg",
+      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%ED%8C%8C%EC%8A%A4%ED%85%94%EC%A4%84%EC%A7%80%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4_37000%EC%9B%90/KakaoTalk_20260319_014656878_12.jpg",
+      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%ED%8C%8C%EC%8A%A4%ED%85%94%EC%A4%84%EC%A7%80%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4_37000%EC%9B%90/KakaoTalk_20260319_014656878_13.jpg",
+      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%ED%8C%8C%EC%8A%A4%ED%85%94%EC%A4%84%EC%A7%80%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4_37000%EC%9B%90/KakaoTalk_20260319_014656878_14.jpg",
+      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%ED%8C%8C%EC%8A%A4%ED%85%94%EC%A4%84%EC%A7%80%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4_37000%EC%9B%90/KakaoTalk_20260319_014656878_15.jpg",
+      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%ED%8C%8C%EC%8A%A4%ED%85%94%EC%A4%84%EC%A7%80%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4_37000%EC%9B%90/KakaoTalk_20260319_014656878_16.jpg",
+      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%ED%8C%8C%EC%8A%A4%ED%85%94%EC%A4%84%EC%A7%80%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4_37000%EC%9B%90/KakaoTalk_20260319_014656878_17.jpg"
+    ]
+  }
+];
+
 const supabaseClient = window.supabase
   ? window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.key)
   : null;
@@ -22,8 +118,10 @@ const translations = {
     "nav.new": "신상품",
     "nav.store": "매장안내",
     "nav.contact": "문의",
-    "home.eyebrow": "B&K WOMEN'S WHOLESALE",
-    "home.title": "잘 팔리는 여성의류를 빠르게 제안합니다",
+    "navFilter.new": "신상품",
+    "navFilter.outer": "아우터",
+    "navFilter.blouseShirt": "블라우스/셔츠",
+    "navFilter.tshirt": "티셔츠",
     "home.description": "신상품 확인부터 카카오톡, 위챗 문의까지 모바일에서 바로 이어집니다.",
     "home.primary": "신상품 보기",
     "home.secondary": "문의하기",
@@ -31,10 +129,10 @@ const translations = {
     "home.categoryTitle": "주력 카테고리",
     "home.category1": "아우터",
     "home.category1Text": "점퍼, 자켓 등 판매 반응이 빠른 시즌 아우터",
-    "home.category2": "블라우스",
-    "home.category2Text": "단품 진열에 강한 여성 상의 라인",
-    "home.category3": "여성 토탈의류",
-    "home.category3Text": "소매 매장과 해외 바이어 상담에 맞춘 셀렉션",
+    "home.category2": "블라우스/셔츠",
+    "home.category2Text": "단품 진열에 강한 블라우스와 셔츠 라인",
+    "home.category3": "티셔츠",
+    "home.category3Text": "활용도 높은 기본 티셔츠와 시즌 티셔츠",
     "home.newLabel": "New",
     "home.newTitle": "이번 신상품",
     "home.newMore": "전체 보기",
@@ -42,7 +140,7 @@ const translations = {
     "home.contactTitle": "상담은 QR로 간단하게",
     "home.contactText": "국내는 카카오톡, 해외 바이어는 위챗으로 바로 연결할 수 있습니다.",
     "home.contactButton": "QR 확인하기",
-    "new.eyebrow": "NEW ARRIVALS",
+    "new.eyebrow": "CATALOG",
     "new.title": "신상품",
     "new.description": "상품 이미지를 눌러 상세 컷을 확인할 수 있습니다.",
     "products.viewDetail": "상세보기",
@@ -67,8 +165,8 @@ const translations = {
     "contact.wechatTitle": "위챗 상담",
     "contact.wechatText": "중국, 대만 등 해외 바이어 문의에 적합합니다.",
     "admin.eyebrow": "ADMIN",
-    "admin.title": "신상품 관리",
-    "admin.description": "로그인 후 모바일에서 상품 등록과 품절 처리를 할 수 있습니다.",
+    "admin.title": "상품 관리",
+    "admin.description": "로그인 후 모바일에서 카테고리를 선택해 상품을 등록할 수 있습니다.",
     "admin.idLabel": "관리자 아이디",
     "admin.passwordLabel": "비밀번호",
     "admin.login": "로그인",
@@ -80,8 +178,9 @@ const translations = {
     "admin.priceZh": "가격(CN)",
     "admin.descKo": "설명(KR)",
     "admin.descZh": "설명(CN)",
-    "admin.labelKo": "카테고리(KR)",
-    "admin.labelZh": "카테고리(CN)",
+    "admin.category": "카테고리",
+    "admin.isNew": "신상품 표시",
+    "admin.isNewHelp": "체크하면 신상품 페이지에도 함께 노출됩니다.",
     "admin.images": "상품 이미지",
     "admin.addProduct": "상품 등록",
     "admin.currentLabel": "Products",
@@ -103,8 +202,10 @@ const translations = {
     "nav.new": "新品",
     "nav.store": "店铺",
     "nav.contact": "咨询",
-    "home.eyebrow": "B&K WOMEN'S WHOLESALE",
-    "home.title": "快速提案更容易销售的女装",
+    "navFilter.new": "新品",
+    "navFilter.outer": "外套",
+    "navFilter.blouseShirt": "衬衫/上衣",
+    "navFilter.tshirt": "T恤",
     "home.description": "从查看新品到通过 KakaoTalk、微信咨询，手机上即可直接完成。",
     "home.primary": "查看新品",
     "home.secondary": "立即咨询",
@@ -112,10 +213,10 @@ const translations = {
     "home.categoryTitle": "主营分类",
     "home.category1": "外套",
     "home.category1Text": "夹克、外套等反应快的季节款",
-    "home.category2": "衬衫上衣",
-    "home.category2Text": "适合单款陈列销售的女装上衣",
-    "home.category3": "女装全品类",
-    "home.category3Text": "适合零售店和海外买手咨询的选款",
+    "home.category2": "衬衫/上衣",
+    "home.category2Text": "适合单款陈列销售的衬衫与上衣",
+    "home.category3": "T恤",
+    "home.category3Text": "适合日常陈列的基础T恤与季节T恤",
     "home.newLabel": "New",
     "home.newTitle": "本周新品",
     "home.newMore": "查看全部",
@@ -123,7 +224,7 @@ const translations = {
     "home.contactTitle": "扫码即可咨询",
     "home.contactText": "韩国客户可用 KakaoTalk，海外买手可用微信直接联系。",
     "home.contactButton": "查看二维码",
-    "new.eyebrow": "NEW ARRIVALS",
+    "new.eyebrow": "CATALOG",
     "new.title": "新品",
     "new.description": "点击商品图片可查看详细图。",
     "products.viewDetail": "查看详情",
@@ -148,8 +249,8 @@ const translations = {
     "contact.wechatTitle": "微信咨询",
     "contact.wechatText": "适合中国、台湾等海外买手咨询。",
     "admin.eyebrow": "ADMIN",
-    "admin.title": "新品管理",
-    "admin.description": "登录后可在手机上上传商品并处理售罄状态。",
+    "admin.title": "商品管理",
+    "admin.description": "登录后可在手机上选择分类并上传商品。",
     "admin.idLabel": "管理员账号",
     "admin.passwordLabel": "密码",
     "admin.login": "登录",
@@ -161,8 +262,9 @@ const translations = {
     "admin.priceZh": "价格(CN)",
     "admin.descKo": "说明(KR)",
     "admin.descZh": "说明(CN)",
-    "admin.labelKo": "分类(KR)",
-    "admin.labelZh": "分类(CN)",
+    "admin.category": "分类",
+    "admin.isNew": "新品显示",
+    "admin.isNewHelp": "勾选后会同时显示在新品页面。",
     "admin.images": "商品图片",
     "admin.addProduct": "新增商品",
     "admin.currentLabel": "Products",
@@ -180,63 +282,6 @@ const translations = {
     "modal.count": "图片 {current} / {total}"
   }
 };
-
-const defaultProducts = [
-  {
-    id: "jumper",
-    createdAt: "2026-03-19T01:46:00+09:00",
-    label: { ko: "Outer", zh: "Outer" },
-    name: { ko: "반달포켓점퍼", zh: "半月口袋夹克" },
-    description: {
-      ko: "구조감 있는 실루엣과 포켓 디테일이 돋보이는 데일리 점퍼",
-      zh: "立体版型搭配口袋细节，适合日常陈列与销售"
-    },
-    shortDescription: {
-      ko: "포켓 디테일이 살아있는 데일리 점퍼",
-      zh: "带有口袋细节的日常夹克"
-    },
-    price: { ko: "52,000원", zh: "52,000韩元" },
-    soldOut: false,
-    images: [
-      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%EB%B0%98%EB%8B%AC%ED%8F%AC%EC%BC%93%EC%A0%90%ED%8D%BC_52000%EC%9B%90/KakaoTalk_20260319_014656878.jpg",
-      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%EB%B0%98%EB%8B%AC%ED%8F%AC%EC%BC%93%EC%A0%90%ED%8D%BC_52000%EC%9B%90/KakaoTalk_20260319_014656878_01.jpg",
-      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%EB%B0%98%EB%8B%AC%ED%8F%AC%EC%BC%93%EC%A0%90%ED%8D%BC_52000%EC%9B%90/KakaoTalk_20260319_014656878_02.jpg",
-      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%EB%B0%98%EB%8B%AC%ED%8F%AC%EC%BC%93%EC%A0%90%ED%8D%BC_52000%EC%9B%90/KakaoTalk_20260319_014656878_03.jpg",
-      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%EB%B0%98%EB%8B%AC%ED%8F%AC%EC%BC%93%EC%A0%90%ED%8D%BC_52000%EC%9B%90/KakaoTalk_20260319_014656878_04.jpg",
-      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%EB%B0%98%EB%8B%AC%ED%8F%AC%EC%BC%93%EC%A0%90%ED%8D%BC_52000%EC%9B%90/KakaoTalk_20260319_014656878_05.jpg",
-      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%EB%B0%98%EB%8B%AC%ED%8F%AC%EC%BC%93%EC%A0%90%ED%8D%BC_52000%EC%9B%90/KakaoTalk_20260319_014656878_06.jpg",
-      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%EB%B0%98%EB%8B%AC%ED%8F%AC%EC%BC%93%EC%A0%90%ED%8D%BC_52000%EC%9B%90/KakaoTalk_20260319_014656878_07.jpg",
-      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%EB%B0%98%EB%8B%AC%ED%8F%AC%EC%BC%93%EC%A0%90%ED%8D%BC_52000%EC%9B%90/KakaoTalk_20260319_014656878_08.jpg",
-      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%EB%B0%98%EB%8B%AC%ED%8F%AC%EC%BC%93%EC%A0%90%ED%8D%BC_52000%EC%9B%90/KakaoTalk_20260319_014656878_09.jpg"
-    ]
-  },
-  {
-    id: "blouse",
-    createdAt: "2026-03-19T01:47:00+09:00",
-    label: { ko: "Blouse", zh: "Blouse" },
-    name: { ko: "파스텔줄지블라우스", zh: "马卡龙条纹衬衫" },
-    description: {
-      ko: "부드러운 컬러감과 스트라이프 패턴이 매력적인 봄 시즌 블라우스",
-      zh: "柔和配色与条纹设计结合的春季女装上衣"
-    },
-    shortDescription: {
-      ko: "가볍게 보여주기 좋은 봄 블라우스",
-      zh: "适合春季陈列的轻盈上衣"
-    },
-    price: { ko: "37,000원", zh: "37,000韩元" },
-    soldOut: false,
-    images: [
-      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%ED%8C%8C%EC%8A%A4%ED%85%94%EC%A4%84%EC%A7%80%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4_37000%EC%9B%90/KakaoTalk_20260319_014656878_10.jpg",
-      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%ED%8C%8C%EC%8A%A4%ED%85%94%EC%A4%84%EC%A7%80%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4_37000%EC%9B%90/KakaoTalk_20260319_014656878_11.jpg",
-      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%ED%8C%8C%EC%8A%A4%ED%85%94%EC%A4%84%EC%A7%80%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4_37000%EC%9B%90/KakaoTalk_20260319_014656878_12.jpg",
-      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%ED%8C%8C%EC%8A%A4%ED%85%94%EC%A4%84%EC%A7%80%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4_37000%EC%9B%90/KakaoTalk_20260319_014656878_13.jpg",
-      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%ED%8C%8C%EC%8A%A4%ED%85%94%EC%A4%84%EC%A7%80%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4_37000%EC%9B%90/KakaoTalk_20260319_014656878_14.jpg",
-      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%ED%8C%8C%EC%8A%A4%ED%85%94%EC%A4%84%EC%A7%80%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4_37000%EC%9B%90/KakaoTalk_20260319_014656878_15.jpg",
-      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%ED%8C%8C%EC%8A%A4%ED%85%94%EC%A4%84%EC%A7%80%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4_37000%EC%9B%90/KakaoTalk_20260319_014656878_16.jpg",
-      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%ED%8C%8C%EC%8A%A4%ED%85%94%EC%A4%84%EC%A7%80%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4_37000%EC%9B%90/KakaoTalk_20260319_014656878_17.jpg"
-    ]
-  }
-];
 
 const savedLang = localStorage.getItem(STORAGE_KEYS.lang);
 let currentLang = savedLang && translations[savedLang] ? savedLang : "ko";
@@ -270,10 +315,23 @@ function normalizeProduct(row) {
     name: row.name,
     description: row.description,
     shortDescription: row.short_description,
+    category: row.category || "outer",
+    isNew: Boolean(row.is_new),
     price: row.price,
     soldOut: row.sold_out,
     images: row.images
   };
+}
+
+function getCurrentFilter() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get("filter") || "new";
+}
+
+function getFilteredProducts() {
+  const filter = getCurrentFilter();
+  if (filter === "new") return productsCache.filter((product) => product.isNew);
+  return productsCache.filter((product) => product.category === filter);
 }
 
 async function fetchProducts() {
@@ -293,24 +351,51 @@ async function fetchProducts() {
   }
 }
 
+function applyTranslations(lang) {
+  document.body.dataset.lang = lang;
+  document.documentElement.lang = lang === "ko" ? "ko" : "zh-CN";
+  document.querySelectorAll("[data-i18n]").forEach((node) => {
+    const value = translations[lang][node.dataset.i18n];
+    if (value) node.textContent = value;
+  });
+  document.querySelectorAll(".lang-button").forEach((button) => {
+    button.classList.toggle("is-active", button.dataset.lang === lang);
+  });
+  if (currentProduct) renderModal();
+}
+
 function renderHomePreview() {
   const container = document.getElementById("home-preview-list");
   if (!container) return;
   container.innerHTML = "";
 
-  productsCache.slice(0, 2).forEach((product) => {
+  productsCache.filter((product) => product.isNew).slice(0, 2).forEach((product) => {
     const article = document.createElement("article");
     article.className = `product-preview-card${product.soldOut ? " is-soldout" : ""}`;
     article.innerHTML = `
       <img src="${product.images[0]}" alt="${getProductText("name", product)}">
       <div>
+        ${product.soldOut ? createSoldOutBadge().outerHTML : ""}
         <strong>${getProductText("name", product)}</strong>
         <p>${getProductText("shortDescription", product) || getProductText("description", product)}</p>
         <span>${getProductText("price", product)}</span>
       </div>
     `;
-    if (product.soldOut) article.querySelector("div").prepend(createSoldOutBadge());
     container.appendChild(article);
+  });
+}
+
+function renderCatalogHeader() {
+  const title = document.getElementById("catalog-title");
+  const description = document.getElementById("catalog-description");
+  if (!title || !description) return;
+  const filter = getCurrentFilter();
+  const meta = CATEGORY_META[filter] || CATEGORY_META.new;
+  title.textContent = meta.title[currentLang];
+  description.textContent = meta.description[currentLang];
+
+  document.querySelectorAll("[data-filter-link]").forEach((link) => {
+    link.classList.toggle("is-active", link.dataset.filterLink === filter);
   });
 }
 
@@ -325,7 +410,7 @@ function renderProductList() {
   if (!container) return;
   container.innerHTML = "";
 
-  productsCache.forEach((product) => {
+  getFilteredProducts().forEach((product) => {
     const article = document.createElement("article");
     article.className = `product-tile${product.soldOut ? " is-soldout" : ""}`;
     article.innerHTML = `
@@ -348,19 +433,6 @@ function renderProductList() {
   });
 
   bindProductModalTriggers();
-}
-
-function applyTranslations(lang) {
-  document.body.dataset.lang = lang;
-  document.documentElement.lang = lang === "ko" ? "ko" : "zh-CN";
-  document.querySelectorAll("[data-i18n]").forEach((node) => {
-    const value = translations[lang][node.dataset.i18n];
-    if (value) node.textContent = value;
-  });
-  document.querySelectorAll(".lang-button").forEach((button) => {
-    button.classList.toggle("is-active", button.dataset.lang === lang);
-  });
-  if (currentProduct) renderModal();
 }
 
 function openModal(productId) {
@@ -441,7 +513,7 @@ function renderAdminProducts() {
         <div class="admin-product-meta">
           <strong>${product.name.ko}</strong>
           <span>${product.price.ko}</span>
-          <span>${product.soldOut ? translations[currentLang]["products.soldOut"] : product.label.ko || ""}</span>
+          <span>${product.soldOut ? translations[currentLang]["products.soldOut"] : CATEGORY_META[product.category]?.label.ko || ""}${product.isNew ? " · " + CATEGORY_META.new.label.ko : ""}</span>
         </div>
       </div>
       <div class="admin-product-actions">
@@ -474,7 +546,6 @@ function renderAdminProducts() {
 async function uploadImages(files) {
   if (!supabaseClient) return [];
   const uploads = [];
-
   for (const file of Array.from(files)) {
     const cleanName = file.name.replace(/[^a-zA-Z0-9.\-_]/g, "-");
     const path = `${Date.now()}-${cleanName}`;
@@ -483,13 +554,13 @@ async function uploadImages(files) {
     const { data } = supabaseClient.storage.from("products").getPublicUrl(path);
     uploads.push(data.publicUrl);
   }
-
   return uploads;
 }
 
 async function refreshProducts() {
   await fetchProducts();
   renderHomePreview();
+  renderCatalogHeader();
   renderProductList();
   renderAdminProducts();
 }
@@ -514,7 +585,6 @@ async function setupAdminPage() {
         email: ADMIN_AUTH.email,
         password
       });
-
       if (error) {
         setMessage("login-message", translations[currentLang]["admin.loginError"]);
         return;
@@ -549,15 +619,13 @@ async function setupAdminPage() {
       }
 
       try {
+        const category = document.getElementById("category").value;
         const images = await uploadImages(imageInput.files);
         const now = new Date().toISOString();
         const product = {
           id: `product-${Date.now()}`,
           created_at: now,
-          label: {
-            ko: document.getElementById("label-ko").value.trim() || "New",
-            zh: document.getElementById("label-zh").value.trim() || document.getElementById("label-ko").value.trim() || "New"
-          },
+          label: CATEGORY_META[category].label,
           name: {
             ko: document.getElementById("name-ko").value.trim(),
             zh: document.getElementById("name-zh").value.trim() || document.getElementById("name-ko").value.trim()
@@ -570,6 +638,8 @@ async function setupAdminPage() {
             ko: document.getElementById("desc-ko").value.trim(),
             zh: document.getElementById("desc-zh").value.trim() || document.getElementById("desc-ko").value.trim()
           },
+          category,
+          is_new: document.getElementById("is-new").checked,
           price: {
             ko: document.getElementById("price-ko").value.trim(),
             zh: document.getElementById("price-zh").value.trim() || document.getElementById("price-ko").value.trim()
@@ -595,7 +665,6 @@ async function setupAdminPage() {
 function setupHiddenAdminEntry() {
   const trigger = document.querySelector("[data-admin-trigger='true']");
   if (!trigger || document.body.dataset.page === "admin") return;
-
   trigger.addEventListener("click", (event) => {
     event.preventDefault();
     adminTapCount += 1;
@@ -603,7 +672,6 @@ function setupHiddenAdminEntry() {
     adminTapTimer = window.setTimeout(() => {
       adminTapCount = 0;
     }, 2200);
-
     if (adminTapCount >= 5) {
       adminTapCount = 0;
       window.location.href = "./admin.html";
@@ -617,6 +685,7 @@ document.querySelectorAll(".lang-button").forEach((button) => {
     localStorage.setItem(STORAGE_KEYS.lang, currentLang);
     applyTranslations(currentLang);
     renderHomePreview();
+    renderCatalogHeader();
     renderProductList();
     renderAdminPanel();
   });
@@ -642,11 +711,13 @@ document.addEventListener("keydown", (event) => {
 async function initializeApp() {
   applyTranslations(currentLang);
   renderHomePreview();
+  renderCatalogHeader();
   renderProductList();
   bindProductModalTriggers();
   setupHiddenAdminEntry();
   await fetchProducts();
   renderHomePreview();
+  renderCatalogHeader();
   renderProductList();
   await setupAdminPage();
 }

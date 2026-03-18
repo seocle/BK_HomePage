@@ -78,12 +78,19 @@
             <textarea id="desc-zh" rows="3"></textarea>
           </label>
           <label class="field">
-            <span data-i18n="admin.labelKo">카테고리(KR)</span>
-            <input id="label-ko" type="text" placeholder="예: Blouse">
+            <span data-i18n="admin.category">카테고리</span>
+            <select id="category" required>
+              <option value="outer" data-i18n="navFilter.outer">아우터</option>
+              <option value="blouse-shirt" data-i18n="navFilter.blouseShirt">블라우스/셔츠</option>
+              <option value="tshirt" data-i18n="navFilter.tshirt">티셔츠</option>
+            </select>
           </label>
           <label class="field">
-            <span data-i18n="admin.labelZh">카테고리(CN)</span>
-            <input id="label-zh" type="text" placeholder="예: Blouse">
+            <span data-i18n="admin.isNew">신상품 표시</span>
+            <label class="check-field">
+              <input id="is-new" type="checkbox">
+              <span data-i18n="admin.isNewHelp">체크하면 신상품 페이지에도 함께 노출됩니다.</span>
+            </label>
           </label>
           <label class="field">
             <span data-i18n="admin.images">상품 이미지</span>

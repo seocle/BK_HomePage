@@ -47,66 +47,7 @@ const CATEGORY_META = {
   }
 };
 
-const defaultProducts = [
-  {
-    id: "jumper",
-    createdAt: "2026-03-19T01:46:00+09:00",
-    label: { ko: "아우터", zh: "外套" },
-    name: { ko: "반달포켓점퍼", zh: "半月口袋夹克" },
-    description: {
-      ko: "구조감 있는 실루엣과 포켓 디테일이 돋보이는 데일리 점퍼",
-      zh: "立体版型搭配口袋细节，适合日常陈列与销售"
-    },
-    shortDescription: {
-      ko: "포켓 디테일이 살아있는 데일리 점퍼",
-      zh: "带有口袋细节的日常夹克"
-    },
-    category: "outer",
-    isNew: true,
-    price: { ko: "52,000원", zh: "52,000韩元" },
-    soldOut: false,
-    images: [
-      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%EB%B0%98%EB%8B%AC%ED%8F%AC%EC%BC%93%EC%A0%90%ED%8D%BC_52000%EC%9B%90/KakaoTalk_20260319_014656878.jpg",
-      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%EB%B0%98%EB%8B%AC%ED%8F%AC%EC%BC%93%EC%A0%90%ED%8D%BC_52000%EC%9B%90/KakaoTalk_20260319_014656878_01.jpg",
-      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%EB%B0%98%EB%8B%AC%ED%8F%AC%EC%BC%93%EC%A0%90%ED%8D%BC_52000%EC%9B%90/KakaoTalk_20260319_014656878_02.jpg",
-      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%EB%B0%98%EB%8B%AC%ED%8F%AC%EC%BC%93%EC%A0%90%ED%8D%BC_52000%EC%9B%90/KakaoTalk_20260319_014656878_03.jpg",
-      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%EB%B0%98%EB%8B%AC%ED%8F%AC%EC%BC%93%EC%A0%90%ED%8D%BC_52000%EC%9B%90/KakaoTalk_20260319_014656878_04.jpg",
-      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%EB%B0%98%EB%8B%AC%ED%8F%AC%EC%BC%93%EC%A0%90%ED%8D%BC_52000%EC%9B%90/KakaoTalk_20260319_014656878_05.jpg",
-      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%EB%B0%98%EB%8B%AC%ED%8F%AC%EC%BC%93%EC%A0%90%ED%8D%BC_52000%EC%9B%90/KakaoTalk_20260319_014656878_06.jpg",
-      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%EB%B0%98%EB%8B%AC%ED%8F%AC%EC%BC%93%EC%A0%90%ED%8D%BC_52000%EC%9B%90/KakaoTalk_20260319_014656878_07.jpg",
-      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%EB%B0%98%EB%8B%AC%ED%8F%AC%EC%BC%93%EC%A0%90%ED%8D%BC_52000%EC%9B%90/KakaoTalk_20260319_014656878_08.jpg",
-      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%EB%B0%98%EB%8B%AC%ED%8F%AC%EC%BC%93%EC%A0%90%ED%8D%BC_52000%EC%9B%90/KakaoTalk_20260319_014656878_09.jpg"
-    ]
-  },
-  {
-    id: "blouse",
-    createdAt: "2026-03-19T01:47:00+09:00",
-    label: { ko: "블라우스/셔츠", zh: "衬衫/上衣" },
-    name: { ko: "파스텔줄지블라우스", zh: "马卡龙条纹衬衫" },
-    description: {
-      ko: "부드러운 컬러감과 스트라이프 패턴이 매력적인 봄 시즌 블라우스",
-      zh: "柔和配色与条纹设计结合的春季女装上衣"
-    },
-    shortDescription: {
-      ko: "가볍게 보여주기 좋은 봄 블라우스",
-      zh: "适合春季陈列的轻盈上衣"
-    },
-    category: "blouse-shirt",
-    isNew: true,
-    price: { ko: "37,000원", zh: "37,000韩元" },
-    soldOut: false,
-    images: [
-      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%ED%8C%8C%EC%8A%A4%ED%85%94%EC%A4%84%EC%A7%80%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4_37000%EC%9B%90/KakaoTalk_20260319_014656878_10.jpg",
-      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%ED%8C%8C%EC%8A%A4%ED%85%94%EC%A4%84%EC%A7%80%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4_37000%EC%9B%90/KakaoTalk_20260319_014656878_11.jpg",
-      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%ED%8C%8C%EC%8A%A4%ED%85%94%EC%A4%84%EC%A7%80%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4_37000%EC%9B%90/KakaoTalk_20260319_014656878_12.jpg",
-      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%ED%8C%8C%EC%8A%A4%ED%85%94%EC%A4%84%EC%A7%80%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4_37000%EC%9B%90/KakaoTalk_20260319_014656878_13.jpg",
-      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%ED%8C%8C%EC%8A%A4%ED%85%94%EC%A4%84%EC%A7%80%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4_37000%EC%9B%90/KakaoTalk_20260319_014656878_14.jpg",
-      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%ED%8C%8C%EC%8A%A4%ED%85%94%EC%A4%84%EC%A7%80%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4_37000%EC%9B%90/KakaoTalk_20260319_014656878_15.jpg",
-      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%ED%8C%8C%EC%8A%A4%ED%85%94%EC%A4%84%EC%A7%80%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4_37000%EC%9B%90/KakaoTalk_20260319_014656878_16.jpg",
-      "https://seocle.github.io/BK_HomePage/Image/%EC%9D%98%EB%A5%98/%ED%8C%8C%EC%8A%A4%ED%85%94%EC%A4%84%EC%A7%80%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4_37000%EC%9B%90/KakaoTalk_20260319_014656878_17.jpg"
-    ]
-  }
-];
+const defaultProducts = [];
 
 const supabaseClient = window.supabase
   ? window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.key)
@@ -290,6 +231,10 @@ let currentImageIndex = 0;
 let adminTapCount = 0;
 let adminTapTimer = null;
 let productsCache = [...defaultProducts];
+let heroProducts = [];
+let heroRotationTimer = null;
+let heroRotationIndex = 0;
+let heroActiveSlot = 0;
 
 function getProductText(field, product) {
   return product[field]?.[currentLang] || product[field]?.ko || "";
@@ -334,6 +279,19 @@ function getFilteredProducts() {
   return productsCache.filter((product) => product.category === filter);
 }
 
+function getHeroProducts() {
+  return productsCache.filter((product) => product.isNew && Array.isArray(product.images) && product.images.length);
+}
+
+function shuffleProducts(products) {
+  const copy = [...products];
+  for (let index = copy.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [copy[index], copy[swapIndex]] = [copy[swapIndex], copy[index]];
+  }
+  return copy;
+}
+
 async function fetchProducts() {
   if (!supabaseClient) return;
   const { data, error } = await supabaseClient
@@ -362,6 +320,7 @@ function applyTranslations(lang) {
     button.classList.toggle("is-active", button.dataset.lang === lang);
   });
   if (currentProduct) renderModal();
+  renderHeroCopy();
 }
 
 function renderHomePreview() {
@@ -383,6 +342,86 @@ function renderHomePreview() {
     `;
     container.appendChild(article);
   });
+}
+
+function renderHeroCopy() {
+  const title = document.querySelector(".promo-title");
+  const description = document.querySelector(".hero-description");
+  if (!title || !description) return;
+
+  const activeProduct = heroProducts[heroRotationIndex];
+  if (!activeProduct) {
+    title.textContent = "B&K";
+    description.textContent = translations[currentLang]["home.description"];
+    return;
+  }
+
+  title.textContent = getProductText("name", activeProduct) || "B&K";
+  description.textContent =
+    getProductText("shortDescription", activeProduct)
+    || getProductText("description", activeProduct)
+    || translations[currentLang]["home.description"];
+}
+
+function renderHeroImage(imageUrl, isInitial = false) {
+  const primaryImage = document.getElementById("hero-image-primary");
+  const secondaryImage = document.getElementById("hero-image-secondary");
+  if (!primaryImage || !secondaryImage || !imageUrl) return;
+
+  const activeImage = heroActiveSlot === 0 ? primaryImage : secondaryImage;
+  const nextImage = heroActiveSlot === 0 ? secondaryImage : primaryImage;
+
+  if (isInitial || !activeImage.src) {
+    primaryImage.src = imageUrl;
+    primaryImage.classList.add("is-active");
+    secondaryImage.classList.remove("is-active", "is-next");
+    heroActiveSlot = 0;
+    return;
+  }
+
+  nextImage.src = imageUrl;
+  nextImage.classList.add("is-next");
+
+  window.requestAnimationFrame(() => {
+    nextImage.classList.add("is-active");
+    nextImage.classList.remove("is-next");
+    activeImage.classList.remove("is-active");
+    heroActiveSlot = heroActiveSlot === 0 ? 1 : 0;
+  });
+}
+
+function stopHeroRotation() {
+  if (heroRotationTimer) {
+    window.clearInterval(heroRotationTimer);
+    heroRotationTimer = null;
+  }
+}
+
+function startHeroRotation() {
+  stopHeroRotation();
+  heroProducts = shuffleProducts(getHeroProducts());
+  heroRotationIndex = 0;
+
+  const heroSection = document.getElementById("hero-rotator");
+  if (!heroSection) return;
+
+  if (!heroProducts.length) {
+    heroSection.classList.add("is-empty");
+    renderHeroCopy();
+    return;
+  }
+
+  heroSection.classList.remove("is-empty");
+  renderHeroImage(heroProducts[0].images[0], true);
+  renderHeroCopy();
+
+  if (heroProducts.length === 1) return;
+
+  heroRotationTimer = window.setInterval(() => {
+    heroRotationIndex = (heroRotationIndex + 1) % heroProducts.length;
+    renderHeroImage(heroProducts[heroRotationIndex].images[0]);
+    renderHeroCopy();
+  }, 5000);
 }
 
 function renderCatalogHeader() {
@@ -559,6 +598,7 @@ async function uploadImages(files) {
 
 async function refreshProducts() {
   await fetchProducts();
+  startHeroRotation();
   renderHomePreview();
   renderCatalogHeader();
   renderProductList();
@@ -710,6 +750,7 @@ document.addEventListener("keydown", (event) => {
 
 async function initializeApp() {
   applyTranslations(currentLang);
+  startHeroRotation();
   renderHomePreview();
   renderCatalogHeader();
   renderProductList();

@@ -23,27 +23,41 @@
       </div>
     </header>
 
-    <nav class="category-nav" id="home-category-nav">
-      <a class="category-link is-active" href="./new.html?filter=new" data-i18n="navFilter.new">신상품</a>
-      <a class="category-link" href="./new.html?filter=outer" data-i18n="navFilter.outer">아우터</a>
-      <a class="category-link" href="./new.html?filter=blouse-shirt" data-i18n="navFilter.blouseShirt">블라우스/셔츠</a>
-      <a class="category-link" href="./new.html?filter=tshirt" data-i18n="navFilter.tshirt">티셔츠</a>
-    </nav>
+    <section class="shortcut-strip">
+      <p class="shortcut-copy" data-i18n="home.shortcutCopy">리테일 셀렉션 BEST 상품 모음전</p>
+      <nav class="icon-category-nav" id="home-category-nav">
+        <a class="icon-category-link" href="./new.html?filter=new">
+          <span class="icon-circle"><img src="./Image/Category/new.svg" alt=""></span>
+          <span data-i18n="navFilter.new">신상품</span>
+        </a>
+        <a class="icon-category-link" href="./new.html?filter=outer">
+          <span class="icon-circle"><img src="./Image/Category/outer.svg" alt=""></span>
+          <span data-i18n="navFilter.outer">아우터</span>
+        </a>
+        <a class="icon-category-link" href="./new.html?filter=blouse-shirt">
+          <span class="icon-circle"><img src="./Image/Category/blouse-shirt.svg" alt=""></span>
+          <span data-i18n="navFilter.blouseShirt">블라우스/셔츠</span>
+        </a>
+        <a class="icon-category-link" href="./new.html?filter=tshirt">
+          <span class="icon-circle"><img src="./Image/Category/tshirt.svg" alt=""></span>
+          <span data-i18n="navFilter.tshirt">티셔츠</span>
+        </a>
+      </nav>
+    </section>
 
     <main class="page page-home">
-      <section class="hero-card">
-        <div class="hero-copy">
-          <div class="hero-logo-wrap">
-            <img class="hero-logo" src="./Image/Logo/BK_Logo.png" alt="B&K 메인 로고">
-          </div>
+      <section class="hero-card hero-card-promo">
+        <div class="hero-promo-image">
+          <img src="./Image/의류/반달포켓점퍼_52000원/KakaoTalk_20260319_014656878.jpg" alt="B&K 대표 상품 이미지">
+        </div>
+        <div class="hero-promo-copy">
+          <span class="promo-badge" data-i18n="home.promoBadge">NEW ARRIVALS</span>
+          <h1 class="promo-title">B&amp;K</h1>
           <p class="hero-description" data-i18n="home.description">신상품 확인부터 카카오톡, 위챗 문의까지 모바일에서 바로 이어집니다.</p>
           <div class="hero-links">
-            <a class="button button-dark" href="./new.html" data-i18n="home.primary">신상품 보기</a>
+            <a class="button button-dark" href="./new.html?filter=new" data-i18n="home.primary">신상품 보기</a>
             <a class="button button-light" href="./contact.html" data-i18n="home.secondary">문의하기</a>
           </div>
-        </div>
-        <div class="hero-image">
-          <img src="./Image/의류/반달포켓점퍼_52000원/KakaoTalk_20260319_014656878.jpg" alt="B&K 대표 상품 이미지">
         </div>
       </section>
 

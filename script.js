@@ -235,6 +235,7 @@ let heroProducts = [];
 let heroRotationTimer = null;
 let heroRotationIndex = 0;
 let heroActiveSlot = 0;
+const preloadedImages = new Set();
 
 function getProductText(field, product) {
   return product[field]?.[currentLang] || product[field]?.ko || "";
@@ -467,6 +468,24 @@ function bindProductModalTriggers() {
   });
 }
 
+function preloadImage(url) {
+  if (!url || preloadedImages.has(url)) return;
+  const image = new Image();
+  image.src = url;
+  preloadedImages.add(url);
+}
+
+function preloadProductImages(product, activeIndex = 0) {
+  if (!product?.images?.length) return;
+
+  preloadImage(product.images[activeIndex]);
+
+  for (let index = 1; index < product.images.length; index += 1) {
+    const nextIndex = (activeIndex + index) % product.images.length;
+    preloadImage(product.images[nextIndex]);
+  }
+}
+
 function renderProductList() {
   const container = document.getElementById("product-list");
   if (!container) return;
@@ -503,6 +522,7 @@ function openModal(productId) {
   currentProduct = productsCache.find((item) => item.id === productId) || null;
   currentImageIndex = 0;
   if (!currentProduct) return;
+  preloadProductImages(currentProduct, currentImageIndex);
   renderModal();
   modal.classList.add("is-open");
   modal.setAttribute("aria-hidden", "false");
@@ -541,6 +561,7 @@ function renderModal() {
 function moveImage(direction) {
   if (!currentProduct) return;
   currentImageIndex = (currentImageIndex + direction + currentProduct.images.length) % currentProduct.images.length;
+  preloadProductImages(currentProduct, currentImageIndex);
   renderModal();
 }
 

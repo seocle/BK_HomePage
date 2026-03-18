@@ -94,9 +94,12 @@
           </label>
           <label class="field">
             <span data-i18n="admin.images">상품 이미지</span>
-            <input id="product-images" type="file" accept="image/*" multiple required>
+            <input id="product-images" type="file" accept="image/*" multiple>
           </label>
-          <button class="button button-dark full" type="submit" data-i18n="admin.addProduct">상품 등록</button>
+          <div class="admin-form-actions">
+            <button class="button button-dark full" id="product-submit-button" type="submit" data-i18n="admin.addProduct">상품 등록</button>
+            <button class="button button-light full hidden" id="cancel-edit-button" type="button" data-i18n="admin.cancelEdit">수정 취소</button>
+          </div>
           <p class="form-message" id="product-message"></p>
         </form>
 

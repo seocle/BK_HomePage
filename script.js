@@ -130,9 +130,13 @@ const translations = {
     "admin.toggleOnSale": "판매중으로 변경",
     "admin.hide": "숨김 처리",
     "admin.show": "다시 노출",
+    "admin.edit": "수정",
+    "admin.editProduct": "상품 수정",
+    "admin.cancelEdit": "수정 취소",
     "admin.delete": "삭제",
     "admin.hidden": "숨김",
     "admin.productDeleted": "상품이 삭제되었습니다.",
+    "admin.productUpdated": "상품이 수정되었습니다.",
     "admin.loginError": "아이디 또는 비밀번호가 다르거나 관리자 계정이 아직 생성되지 않았습니다.",
     "admin.loginSuccess": "로그인되었습니다.",
     "admin.productSaved": "상품이 등록되었습니다.",
@@ -219,9 +223,13 @@ const translations = {
     "admin.toggleOnSale": "恢复销售",
     "admin.hide": "隐藏",
     "admin.show": "重新显示",
+    "admin.edit": "修改",
+    "admin.editProduct": "修改商品",
+    "admin.cancelEdit": "取消修改",
     "admin.delete": "删除",
     "admin.hidden": "隐藏",
     "admin.productDeleted": "商品已删除。",
+    "admin.productUpdated": "商品已更新。",
     "admin.loginError": "账号或密码错误，或管理员账号尚未创建。",
     "admin.loginSuccess": "已登录。",
     "admin.productSaved": "商品已保存。",
@@ -246,6 +254,7 @@ let heroRotationTimer = null;
 let heroRotationIndex = 0;
 let heroActiveSlot = 0;
 const preloadedImages = new Set();
+let editingProductId = null;
 
 function getProductText(field, product) {
   return product[field]?.[currentLang] || product[field]?.ko || "";
@@ -254,6 +263,43 @@ function getProductText(field, product) {
 function setMessage(id, text) {
   const node = document.getElementById(id);
   if (node) node.textContent = text;
+}
+
+function setProductFormMode() {
+  const submitButton = document.getElementById("product-submit-button");
+  const cancelButton = document.getElementById("cancel-edit-button");
+  const imageInput = document.getElementById("product-images");
+  if (!submitButton || !cancelButton || !imageInput) return;
+
+  submitButton.textContent = editingProductId
+    ? translations[currentLang]["admin.editProduct"]
+    : translations[currentLang]["admin.addProduct"];
+  cancelButton.classList.toggle("hidden", !editingProductId);
+  imageInput.required = !editingProductId;
+}
+
+function resetProductForm() {
+  const productForm = document.getElementById("product-form");
+  if (!productForm) return;
+  editingProductId = null;
+  productForm.reset();
+  setProductFormMode();
+}
+
+function fillProductForm(product) {
+  if (!product) return;
+  editingProductId = product.id;
+  document.getElementById("name-ko").value = product.name?.ko || "";
+  document.getElementById("name-zh").value = product.name?.zh || "";
+  document.getElementById("price-ko").value = product.price?.ko || "";
+  document.getElementById("price-zh").value = product.price?.zh || "";
+  document.getElementById("desc-ko").value = product.description?.ko || "";
+  document.getElementById("desc-zh").value = product.description?.zh || "";
+  document.getElementById("category").value = product.category || "outer";
+  document.getElementById("is-new").checked = Boolean(product.isNew);
+  document.getElementById("product-images").value = "";
+  setProductFormMode();
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function createSoldOutBadge() {
@@ -333,6 +379,7 @@ function applyTranslations(lang) {
     button.classList.toggle("is-active", button.dataset.lang === lang);
   });
   if (currentProduct) renderModal();
+  setProductFormMode();
   renderHeroCopy();
 }
 
@@ -631,6 +678,9 @@ function renderAdminProducts() {
         <button class="button button-light" type="button" data-toggle-hidden="${product.id}">
           ${product.hidden ? translations[currentLang]["admin.show"] : translations[currentLang]["admin.hide"]}
         </button>
+        <button class="button button-light" type="button" data-edit-product="${product.id}">
+          ${translations[currentLang]["admin.edit"]}
+        </button>
         <button class="button button-light button-danger" type="button" data-delete-product="${product.id}">
           ${translations[currentLang]["admin.delete"]}
         </button>
@@ -691,6 +741,14 @@ function renderAdminProducts() {
       }
     };
   });
+
+  container.querySelectorAll("[data-edit-product]").forEach((button) => {
+    button.onclick = () => {
+      const id = button.dataset.editProduct;
+      const product = productsCache.find((item) => item.id === id);
+      fillProductForm(product);
+    };
+  });
 }
 
 async function uploadImages(files) {
@@ -736,7 +794,9 @@ async function setupAdminPage() {
   const loginForm = document.getElementById("login-form");
   const productForm = document.getElementById("product-form");
   const logoutButton = document.getElementById("logout-button");
+  const cancelEditButton = document.getElementById("cancel-edit-button");
   await renderAdminPanel();
+  setProductFormMode();
 
   if (loginForm) {
     loginForm.addEventListener("submit", async (event) => {
@@ -771,6 +831,13 @@ async function setupAdminPage() {
     });
   }
 
+  if (cancelEditButton) {
+    cancelEditButton.addEventListener("click", () => {
+      resetProductForm();
+      setMessage("product-message", "");
+    });
+  }
+
   if (productForm) {
     productForm.addEventListener("submit", async (event) => {
       event.preventDefault();
@@ -780,18 +847,25 @@ async function setupAdminPage() {
       if (!session) return;
 
       const imageInput = document.getElementById("product-images");
-      if (!imageInput.files || !imageInput.files.length) {
+      if (!editingProductId && (!imageInput.files || !imageInput.files.length)) {
         setMessage("product-message", translations[currentLang]["admin.imageRequired"]);
         return;
       }
 
       try {
+        const isEditing = Boolean(editingProductId);
         const category = document.getElementById("category").value;
-        const images = await uploadImages(imageInput.files);
+        const existingProduct = editingProductId
+          ? productsCache.find((item) => item.id === editingProductId)
+          : null;
+        let images = existingProduct?.images || [];
+
+        if (imageInput.files && imageInput.files.length) {
+          images = await uploadImages(imageInput.files);
+        }
+
         const now = new Date().toISOString();
         const product = {
-          id: `product-${Date.now()}`,
-          created_at: now,
           label: CATEGORY_META[category].label,
           name: {
             ko: document.getElementById("name-ko").value.trim(),
@@ -807,20 +881,45 @@ async function setupAdminPage() {
           },
           category,
           is_new: document.getElementById("is-new").checked,
-          hidden: false,
+          hidden: existingProduct?.hidden || false,
           price: {
             ko: document.getElementById("price-ko").value.trim(),
             zh: document.getElementById("price-zh").value.trim() || document.getElementById("price-ko").value.trim()
           },
-          sold_out: false,
+          sold_out: existingProduct?.soldOut || false,
           images
         };
 
-        const { error } = await supabaseClient.from("products").insert(product);
+        let error = null;
+        if (editingProductId && existingProduct) {
+          const updatePayload = {
+            ...product,
+            created_at: existingProduct.createdAt || now
+          };
+          const result = await supabaseClient.from("products").update(updatePayload).eq("id", editingProductId);
+          error = result.error;
+
+          if (!error && imageInput.files && imageInput.files.length) {
+            const oldImages = (existingProduct.images || []).filter((url) => !images.includes(url));
+            await deleteProductImages(oldImages);
+          }
+        } else {
+          const insertPayload = {
+            ...product,
+            id: `product-${Date.now()}`,
+            created_at: now
+          };
+          const result = await supabaseClient.from("products").insert(insertPayload);
+          error = result.error;
+        }
+
         if (error) throw error;
 
-        productForm.reset();
-        setMessage("product-message", translations[currentLang]["admin.productSaved"]);
+        const successMessage = isEditing
+          ? translations[currentLang]["admin.productUpdated"]
+          : translations[currentLang]["admin.productSaved"];
+        resetProductForm();
+        setMessage("product-message", successMessage);
         await refreshProducts();
       } catch (error) {
         console.error(error);

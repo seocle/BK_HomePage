@@ -746,6 +746,11 @@ a {
   gap: 12px;
 }
 
+.admin-form-actions {
+  display: grid;
+  gap: 10px;
+}
+
 .form-message {
   margin: 0;
   color: var(--accent-strong);

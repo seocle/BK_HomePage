@@ -370,6 +370,7 @@ function renderHeroImage(imageUrl, isInitial = false) {
 
   if (isInitial || !activeImage.src) {
     primaryImage.src = imageUrl;
+    setHeroImageFit(primaryImage);
     primaryImage.classList.add("is-active");
     secondaryImage.classList.remove("is-active", "is-next");
     heroActiveSlot = 0;
@@ -377,6 +378,7 @@ function renderHeroImage(imageUrl, isInitial = false) {
   }
 
   nextImage.src = imageUrl;
+  setHeroImageFit(nextImage);
   nextImage.classList.add("is-next");
 
   window.requestAnimationFrame(() => {
@@ -419,6 +421,30 @@ function startHeroRotation() {
     renderHeroImage(heroProducts[heroRotationIndex].images[0]);
     renderHeroCopy();
   }, 5000);
+}
+
+function setHeroImageFit(imageNode) {
+  const updateFitMode = () => {
+    const container = imageNode.parentElement;
+    if (!container) return;
+
+    const containerWidth = container.clientWidth;
+    const containerHeight = container.clientHeight;
+    const naturalWidth = imageNode.naturalWidth;
+    const naturalHeight = imageNode.naturalHeight;
+
+    if (!containerWidth || !containerHeight || !naturalWidth || !naturalHeight) return;
+
+    const shouldContain = naturalWidth < containerWidth || naturalHeight < containerHeight;
+    imageNode.classList.toggle("fit-contain", shouldContain);
+    imageNode.classList.toggle("fit-cover", !shouldContain);
+  };
+
+  if (imageNode.complete) {
+    updateFitMode();
+  } else {
+    imageNode.onload = updateFitMode;
+  }
 }
 
 function renderCatalogHeader() {

@@ -561,13 +561,26 @@ a {
   padding: 0;
   border: 0;
   background: transparent;
-  cursor: pointer;
   border-radius: 28px 28px 0 0;
   overflow: hidden;
 }
 
 .product-tile {
   overflow: hidden;
+}
+
+.product-tile-button {
+  cursor: pointer;
+}
+
+.product-tile-button:focus-visible {
+  outline: 2px solid var(--accent-strong);
+  outline-offset: 2px;
+}
+
+.tile-link-copy {
+  display: inline-block;
+  margin-top: 2px;
 }
 
 .tile-head {

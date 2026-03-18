@@ -469,6 +469,12 @@ function renderCatalogHeader() {
 function bindProductModalTriggers() {
   document.querySelectorAll("[data-modal-product]").forEach((trigger) => {
     trigger.onclick = () => openModal(trigger.dataset.modalProduct);
+    trigger.onkeydown = (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openModal(trigger.dataset.modalProduct);
+      }
+    };
   });
 }
 
@@ -497,11 +503,14 @@ function renderProductList() {
 
   getFilteredProducts().forEach((product) => {
     const article = document.createElement("article");
-    article.className = `product-tile${product.soldOut ? " is-soldout" : ""}`;
+    article.className = `product-tile product-tile-button${product.soldOut ? " is-soldout" : ""}`;
+    article.dataset.modalProduct = product.id;
+    article.tabIndex = 0;
+    article.setAttribute("role", "button");
     article.innerHTML = `
-      <button class="tile-image" type="button" data-modal-product="${product.id}">
+      <div class="tile-image">
         <img src="${product.images[0]}" alt="${getProductText("name", product)}">
-      </button>
+      </div>
       <div class="tile-body">
         <div class="tile-head">
           <div>
@@ -511,7 +520,7 @@ function renderProductList() {
           <span>${getProductText("price", product)}</span>
         </div>
         <p>${getProductText("description", product)}</p>
-        <button class="inline-link text-button" type="button" data-modal-product="${product.id}">${translations[currentLang]["products.viewDetail"]}</button>
+        <span class="inline-link tile-link-copy">${translations[currentLang]["products.viewDetail"]}</span>
       </div>
     `;
     container.appendChild(article);

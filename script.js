@@ -385,6 +385,13 @@ function parseOptionInput(value) {
     .filter(Boolean);
 }
 
+function formatAdminPrice(value, currency) {
+  const digits = String(value || "").replace(/[^\d]/g, "");
+  if (!digits) return "";
+  const formatted = Number(digits).toLocaleString("en-US");
+  return `${formatted}${currency}`;
+}
+
 function renderOptionTags(items = []) {
   if (!Array.isArray(items) || !items.length) return "";
   return `
@@ -1009,8 +1016,11 @@ async function setupAdminPage() {
           is_new: document.getElementById("is-new").checked,
           hidden: existingProduct?.hidden || false,
           price: {
-            ko: document.getElementById("price-ko").value.trim(),
-            zh: document.getElementById("price-zh").value.trim() || document.getElementById("price-ko").value.trim()
+            ko: formatAdminPrice(document.getElementById("price-ko").value.trim(), "원"),
+            zh: formatAdminPrice(
+              document.getElementById("price-zh").value.trim() || document.getElementById("price-ko").value.trim(),
+              "WON"
+            )
           },
           sold_out: existingProduct?.soldOut || false,
           images

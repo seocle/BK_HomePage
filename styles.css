@@ -498,6 +498,13 @@ a {
   font-size: 0.98rem;
 }
 
+.qr-direct-button {
+  margin-top: 14px;
+  width: fit-content;
+  min-height: 40px;
+  padding: 0 16px;
+}
+
 .qr-image-link {
   display: block;
   width: 120px;

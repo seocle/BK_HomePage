@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>B&amp;K | 문의하기</title>
+  <meta name="description" content="B&K 카카오톡 및 위챗 문의 페이지">
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body data-page="contact" data-forced-lang="zh" data-market="cn">
+  <div class="mobile-shell">
+    <header class="topbar">
+      <a class="brand" data-admin-trigger="true" href="./cn.html">B&amp;K</a>
+      <div class="topbar-actions">
+        <div class="lang-switch" aria-label="language switch">
+          <button class="lang-button is-active" type="button" data-lang="ko">KR</button>
+          <button class="lang-button" type="button" data-lang="zh">CN</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="page">
+      <section class="page-intro">
+        <p class="eyebrow" data-i18n="contact.eyebrow">CONTACT</p>
+        <h1 class="page-title" data-i18n="contact.title">문의하기</h1>
+        <p class="page-text" data-i18n="contact.description">아래 QR을 스캔하면 바로 상담으로 연결됩니다.</p>
+      </section>
+
+      <section class="qr-stack">
+        <article class="qr-card">
+          <div class="qr-card-copy">
+            <p class="card-label" data-i18n="contact.kakaoLabel">KakaoTalk</p>
+            <strong data-i18n="contact.kakaoTitle">카카오톡 상담</strong>
+            <p data-i18n="contact.kakaoText">국내 소매 사장님 문의에 적합합니다.</p>
+            <a class="button button-dark qr-direct-button" href="http://qr.kakao.com/talk/8X7O5eyUTHNKVz83GzjdA7Sj_ac-" target="_blank" rel="noopener noreferrer" data-i18n="contact.directLink">바로가기</a>
+          </div>
+          <a class="qr-image-link" href="./Image/QR_CODE/kakao-talk-v2.png" target="_blank" rel="noopener noreferrer" aria-label="카카오톡 QR 코드 열기">
+            <img src="./Image/QR_CODE/kakao-talk-v2.png" alt="카카오톡 QR 코드">
+          </a>
+        </article>
+        <article class="qr-card">
+          <div class="qr-card-copy">
+            <p class="card-label" data-i18n="contact.wechatLabel">WeChat</p>
+            <strong data-i18n="contact.wechatTitle">위챗 상담</strong>
+            <p data-i18n="contact.wechatText">중국, 대만 등 해외 바이어 문의에 적합합니다.</p>
+            <a class="button button-dark qr-direct-button" href="./Image/QR_CODE/wechat-v2.png" download="BK-WeChat-QR.png" data-i18n="contact.downloadQr">QR 다운로드</a>
+          </div>
+          <a class="qr-image-link" href="./Image/QR_CODE/wechat-v2.png" target="_blank" rel="noopener noreferrer" aria-label="위챗 QR 코드 열기">
+            <img src="./Image/QR_CODE/wechat-v2.png" alt="위챗 QR 코드">
+          </a>
+        </article>
+      </section>
+    </main>
+
+    <nav class="bottom-nav">
+      <a class="bottom-link" href="./cn.html" data-i18n="nav.home">홈</a>
+      <a class="bottom-link" href="./new-cn.html" data-i18n="nav.new">신상품</a>
+      <a class="bottom-link" href="./store-cn.html" data-i18n="nav.store">매장안내</a>
+      <a class="bottom-link is-active" href="./contact-cn.html" data-i18n="nav.contact">문의</a>
+    </nav>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./script.js"></script>
+</body>
+</html>

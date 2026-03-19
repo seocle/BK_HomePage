@@ -12,6 +12,25 @@ const ADMIN_AUTH = {
   email: "cgh5454@bk-homepage.local"
 };
 
+const MARKET_ROUTE_MAP = {
+  home: {
+    ko: "./kr.html",
+    zh: "./cn.html"
+  },
+  new: {
+    ko: "./new-kr.html",
+    zh: "./new-cn.html"
+  },
+  store: {
+    ko: "./store-kr.html",
+    zh: "./store-cn.html"
+  },
+  contact: {
+    ko: "./contact-kr.html",
+    zh: "./contact-cn.html"
+  }
+};
+
 const CATEGORY_META = {
   new: {
     label: { ko: "신상품", zh: "新品" },
@@ -258,8 +277,11 @@ const translations = {
   }
 };
 
+const forcedLang = document.body?.dataset?.forcedLang;
 const savedLang = localStorage.getItem(STORAGE_KEYS.lang);
-let currentLang = savedLang && translations[savedLang] ? savedLang : "ko";
+let currentLang = forcedLang && translations[forcedLang]
+  ? forcedLang
+  : (savedLang && translations[savedLang] ? savedLang : "ko");
 let currentProduct = null;
 let currentImageIndex = 0;
 let adminTapCount = 0;
@@ -275,6 +297,23 @@ let currentAdminFilter = "all";
 
 function getProductText(field, product) {
   return product[field]?.[currentLang] || product[field]?.ko || "";
+}
+
+function getRoute(page, lang = currentLang) {
+  return MARKET_ROUTE_MAP[page]?.[lang] || `./${page}.html`;
+}
+
+function getCatalogHref(filter = "new", lang = currentLang) {
+  return `${getRoute("new", lang)}?filter=${filter}`;
+}
+
+function getCurrentPageRoute(lang = currentLang) {
+  const page = document.body.dataset.page;
+  if (page === "home") return getRoute("home", lang);
+  if (page === "new") return getRoute("new", lang);
+  if (page === "store") return getRoute("store", lang);
+  if (page === "contact") return getRoute("contact", lang);
+  return null;
 }
 
 function setMessage(id, text) {
@@ -519,12 +558,12 @@ function renderHeroCopy() {
   const activeProduct = heroProducts[heroRotationIndex];
   if (!activeProduct) {
     description.textContent = translations[currentLang]["home.description"];
-    heroLink.href = "./new.html?filter=new";
+    heroLink.href = getCatalogHref("new");
     return;
   }
 
   description.textContent = translations[currentLang]["home.description"];
-  heroLink.href = `./new.html?filter=${activeProduct.category || "new"}`;
+  heroLink.href = getCatalogHref(activeProduct.category || "new");
 }
 
 function renderHeroImage(imageUrl, isInitial = false) {
@@ -1099,7 +1138,16 @@ function setupHiddenAdminEntry() {
 
 document.querySelectorAll(".lang-button").forEach((button) => {
   button.addEventListener("click", () => {
-    currentLang = button.dataset.lang;
+    const targetLang = button.dataset.lang;
+    if (forcedLang) {
+      const targetRoute = getCurrentPageRoute(targetLang);
+      if (targetRoute) {
+        const currentParams = window.location.search || "";
+        window.location.href = `${targetRoute}${currentParams}`;
+        return;
+      }
+    }
+    currentLang = targetLang;
     localStorage.setItem(STORAGE_KEYS.lang, currentLang);
     applyTranslations(currentLang);
     renderHomePreview();

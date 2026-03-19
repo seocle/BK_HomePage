@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>B&amp;K | 매장안내</title>
+  <meta name="description" content="B&K 매장안내 페이지">
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body data-page="store" data-forced-lang="ko" data-market="kr">
+  <div class="mobile-shell">
+    <header class="topbar">
+      <a class="brand" data-admin-trigger="true" href="./kr.html">B&amp;K</a>
+      <div class="topbar-actions">
+        <div class="lang-switch" aria-label="language switch">
+          <button class="lang-button is-active" type="button" data-lang="ko">KR</button>
+          <button class="lang-button" type="button" data-lang="zh">CN</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="page">
+      <section class="page-intro">
+        <p class="eyebrow" data-i18n="store.eyebrow">STORE GUIDE</p>
+        <h1 class="page-title" data-i18n="store.title">매장안내</h1>
+        <p class="page-text" data-i18n="store.description">소매 매장과 해외 바이어 상담에 맞춘 여성 토탈의류 도매 매장입니다.</p>
+      </section>
+
+      <section class="stack-grid">
+        <article class="info-card large">
+          <p class="card-label">B&amp;K</p>
+          <strong data-i18n="store.nameTitle">여성의류 도매</strong>
+          <p data-i18n="store.copy">신상품 제안부터 상담 연결까지 간단하고 빠르게 진행할 수 있습니다.</p>
+        </article>
+        <article class="info-card">
+          <span class="card-label" data-i18n="store.phoneLabel">연락처</span>
+          <strong><a class="plain-link" href="tel:01090094228">010-9009-4228</a></strong>
+        </article>
+        <article class="info-card">
+          <span class="card-label" data-i18n="store.channelLabel">상담 채널</span>
+          <strong data-i18n="store.channelValue">카카오톡 / 위챗 QR 문의</strong>
+        </article>
+        <article class="info-card">
+          <span class="card-label" data-i18n="store.addressLabel">매장 주소</span>
+          <strong data-i18n="store.addressValue">서울특별시 중구 을지로 45길 62, 누죤 빌딩 1층 228호 B&amp;K</strong>
+        </article>
+      </section>
+    </main>
+
+    <nav class="bottom-nav">
+      <a class="bottom-link" href="./kr.html" data-i18n="nav.home">홈</a>
+      <a class="bottom-link" href="./new-kr.html" data-i18n="nav.new">신상품</a>
+      <a class="bottom-link is-active" href="./store-kr.html" data-i18n="nav.store">매장안내</a>
+      <a class="bottom-link" href="./contact-kr.html" data-i18n="nav.contact">문의</a>
+    </nav>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./script.js"></script>
+</body>
+</html>

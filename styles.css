@@ -72,6 +72,13 @@ a {
   gap: 10px;
 }
 
+.topbar-logo {
+  width: auto;
+  height: 24px;
+  object-fit: contain;
+  opacity: 0.9;
+}
+
 .brand,
 .page-title,
 .section-head h2,

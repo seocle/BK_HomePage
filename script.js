@@ -392,6 +392,18 @@ function formatAdminPrice(value, currency) {
   return `${formatted}${currency}`;
 }
 
+function bindPriceFormatter(inputId, currency) {
+  const input = document.getElementById(inputId);
+  if (!input) return;
+
+  const applyFormat = () => {
+    input.value = formatAdminPrice(input.value, currency);
+  };
+
+  input.addEventListener("input", applyFormat);
+  input.addEventListener("blur", applyFormat);
+}
+
 function renderOptionTags(items = []) {
   if (!Array.isArray(items) || !items.length) return "";
   return `
@@ -904,6 +916,8 @@ async function setupAdminPage() {
   const openCreateButton = document.getElementById("open-create-product");
   await renderAdminPanel();
   setProductFormMode();
+  bindPriceFormatter("price-ko", "원");
+  bindPriceFormatter("price-zh", "WON");
 
   if (loginForm) {
     loginForm.addEventListener("submit", async (event) => {

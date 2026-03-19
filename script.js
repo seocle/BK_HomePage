@@ -86,6 +86,8 @@ const translations = {
     "new.description": "상품 이미지를 눌러 상세 컷을 확인할 수 있습니다.",
     "products.viewDetail": "상세보기",
     "products.soldOut": "품절",
+    "products.singlePriceLabel": "1장",
+    "products.bulkPriceLabel": "2장 이상",
     "store.eyebrow": "STORE GUIDE",
     "store.title": "매장안내",
     "store.description": "소매 매장과 해외 바이어 상담에 맞춘 여성 토탈의류 도매 매장입니다.",
@@ -185,6 +187,8 @@ const translations = {
     "new.description": "点击商品图片可查看详细图。",
     "products.viewDetail": "查看详情",
     "products.soldOut": "售罄",
+    "products.singlePriceLabel": "1件",
+    "products.bulkPriceLabel": "2件以上",
     "store.eyebrow": "STORE GUIDE",
     "store.title": "店铺信息",
     "store.description": "面向零售店主与海外买手的女装批发店铺。",
@@ -390,6 +394,22 @@ function renderOptionTags(items = []) {
   `;
 }
 
+function getPriceMarkup(product) {
+  const koreanPrice = product?.price?.ko || "";
+  const chineseBulkPrice = product?.price?.zh || koreanPrice;
+
+  if (currentLang === "zh") {
+    return `
+      <div class="price-stack price-stack-zh">
+        <span class="price-line"><b>${translations[currentLang]["products.singlePriceLabel"]}</b> ${koreanPrice}</span>
+        <span class="price-line"><b>${translations[currentLang]["products.bulkPriceLabel"]}</b> ${chineseBulkPrice}</span>
+      </div>
+    `;
+  }
+
+  return `<span class="price-line">${koreanPrice}</span>`;
+}
+
 function getCurrentFilter() {
   const params = new URLSearchParams(window.location.search);
   return params.get("filter") || "new";
@@ -463,7 +483,7 @@ function renderHomePreview() {
         ${product.soldOut ? createSoldOutBadge().outerHTML : ""}
         <strong>${getProductText("name", product)}</strong>
         <p>${getProductText("shortDescription", product) || getProductText("description", product)}</p>
-        <span>${getProductText("price", product)}</span>
+        ${getPriceMarkup(product)}
       </div>
     `;
     container.appendChild(button);
@@ -640,7 +660,7 @@ function renderProductList() {
             <strong>${getProductText("name", product)}</strong>
             ${product.soldOut ? createSoldOutBadge().outerHTML : ""}
           </div>
-          <span>${getProductText("price", product)}</span>
+          ${getPriceMarkup(product)}
         </div>
         <p>${getProductText("description", product)}</p>
         <span class="inline-link tile-link-copy">${translations[currentLang]["products.viewDetail"]}</span>
@@ -688,7 +708,7 @@ function renderModal() {
   modalLabel.textContent = getProductText("label", currentProduct);
   modalTitle.textContent = getProductText("name", currentProduct);
   modalDescription.textContent = getProductText("description", currentProduct);
-  modalPrice.textContent = getProductText("price", currentProduct);
+  modalPrice.innerHTML = getPriceMarkup(currentProduct);
   modalCount.textContent = translations[currentLang]["modal.count"]
     .replace("{current}", String(currentImageIndex + 1))
     .replace("{total}", String(currentProduct.images.length));

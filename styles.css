@@ -525,8 +525,24 @@ a {
 }
 
 .product-preview-card span,
-.tile-head span {
+.tile-head span,
+.price-line {
   color: var(--accent-strong);
+  font-weight: 700;
+}
+
+.price-stack {
+  display: grid;
+  gap: 4px;
+}
+
+.price-stack-zh {
+  justify-items: end;
+  text-align: right;
+}
+
+.price-line b {
+  margin-right: 6px;
   font-weight: 700;
 }
 

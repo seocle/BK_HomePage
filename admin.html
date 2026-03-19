@@ -52,6 +52,37 @@
           <button class="button button-light" id="logout-button" type="button" data-i18n="admin.logout">로그아웃</button>
         </div>
 
+        <section class="admin-controls">
+          <div class="admin-filter-tabs">
+            <button class="category-link is-active" type="button" data-admin-filter="all" data-i18n="admin.filterAll">전체상품보기</button>
+            <button class="category-link" type="button" data-admin-filter="outer" data-i18n="navFilter.outer">아우터</button>
+            <button class="category-link" type="button" data-admin-filter="blouse-shirt" data-i18n="navFilter.blouseShirt">블라우스/셔츠</button>
+            <button class="category-link" type="button" data-admin-filter="tshirt" data-i18n="navFilter.tshirt">티셔츠</button>
+          </div>
+          <button class="button button-dark full" id="open-create-product" type="button" data-i18n="admin.openCreate">새상품 등록</button>
+          <p class="form-message" id="product-message"></p>
+        </section>
+
+        <section class="admin-products">
+          <div class="section-head compact">
+            <div>
+              <p class="section-label" data-i18n="admin.currentLabel">Products</p>
+              <h2 data-i18n="admin.currentTitle">등록 상품</h2>
+            </div>
+          </div>
+          <div class="admin-product-list" id="admin-product-list"></div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal" id="admin-form-modal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-admin-form="true"></div>
+    <div class="modal-sheet admin-form-sheet" role="dialog" aria-modal="true" aria-labelledby="admin-form-title">
+      <button class="modal-close" type="button" data-close-admin-form="true" aria-label="닫기">닫기</button>
+      <div class="modal-content">
+        <p class="section-label" data-i18n="admin.eyebrow">ADMIN</p>
+        <h2 id="admin-form-title" data-i18n="admin.addProduct">상품 등록</h2>
         <form class="admin-form" id="product-form">
           <label class="field">
             <span data-i18n="admin.nameKo">상품명(KR)</span>
@@ -108,20 +139,9 @@
             <button class="button button-dark full" id="product-submit-button" type="submit" data-i18n="admin.addProduct">상품 등록</button>
             <button class="button button-light full hidden" id="cancel-edit-button" type="button" data-i18n="admin.cancelEdit">수정 취소</button>
           </div>
-          <p class="form-message" id="product-message"></p>
         </form>
-
-        <section class="admin-products">
-          <div class="section-head compact">
-            <div>
-              <p class="section-label" data-i18n="admin.currentLabel">Products</p>
-              <h2 data-i18n="admin.currentTitle">등록 상품</h2>
-            </div>
-          </div>
-          <div class="admin-product-list" id="admin-product-list"></div>
-        </section>
-      </section>
-    </main>
+      </div>
+    </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>

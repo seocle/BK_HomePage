@@ -126,6 +126,8 @@ const translations = {
     "admin.isNewHelp": "체크하면 신상품 페이지에도 함께 노출됩니다.",
     "admin.images": "상품 이미지",
     "admin.addProduct": "상품 등록",
+    "admin.openCreate": "새상품 등록",
+    "admin.filterAll": "전체상품보기",
     "admin.currentLabel": "Products",
     "admin.currentTitle": "등록 상품",
     "admin.toggleSoldOut": "품절 처리",
@@ -221,6 +223,8 @@ const translations = {
     "admin.isNewHelp": "勾选后会同时显示在新品页面。",
     "admin.images": "商品图片",
     "admin.addProduct": "新增商品",
+    "admin.openCreate": "新增商品",
+    "admin.filterAll": "全部商品",
     "admin.currentLabel": "Products",
     "admin.currentTitle": "已登记商品",
     "admin.toggleSoldOut": "标记售罄",
@@ -259,6 +263,7 @@ let heroRotationIndex = 0;
 let heroActiveSlot = 0;
 const preloadedImages = new Set();
 let editingProductId = null;
+let currentAdminFilter = "all";
 
 function getProductText(field, product) {
   return product[field]?.[currentLang] || product[field]?.ko || "";
@@ -273,11 +278,14 @@ function setProductFormMode() {
   const submitButton = document.getElementById("product-submit-button");
   const cancelButton = document.getElementById("cancel-edit-button");
   const imageInput = document.getElementById("product-images");
+  const formTitle = document.getElementById("admin-form-title");
   if (!submitButton || !cancelButton || !imageInput) return;
 
-  submitButton.textContent = editingProductId
+  const title = editingProductId
     ? translations[currentLang]["admin.editProduct"]
     : translations[currentLang]["admin.addProduct"];
+  submitButton.textContent = title;
+  if (formTitle) formTitle.textContent = title;
   cancelButton.classList.toggle("hidden", !editingProductId);
   imageInput.required = !editingProductId;
 }
@@ -305,7 +313,35 @@ function fillProductForm(product) {
   document.getElementById("is-new").checked = Boolean(product.isNew);
   document.getElementById("product-images").value = "";
   setProductFormMode();
+  openAdminFormModal();
   window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function openAdminFormModal() {
+  const modal = document.getElementById("admin-form-modal");
+  if (!modal) return;
+  modal.classList.add("is-open");
+  modal.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+}
+
+function closeAdminFormModal() {
+  const modal = document.getElementById("admin-form-modal");
+  if (!modal) return;
+  modal.classList.remove("is-open");
+  modal.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+}
+
+function getAdminProducts() {
+  if (currentAdminFilter === "all") return productsCache;
+  return productsCache.filter((product) => product.category === currentAdminFilter);
+}
+
+function updateAdminFilterButtons() {
+  document.querySelectorAll("[data-admin-filter]").forEach((button) => {
+    button.classList.toggle("is-active", button.dataset.adminFilter === currentAdminFilter);
+  });
 }
 
 function createSoldOutBadge() {
@@ -696,8 +732,9 @@ function renderAdminProducts() {
   const container = document.getElementById("admin-product-list");
   if (!container) return;
   container.innerHTML = "";
+  updateAdminFilterButtons();
 
-  productsCache.forEach((product) => {
+  getAdminProducts().forEach((product) => {
     const card = document.createElement("article");
     card.className = "admin-product-card";
     card.innerHTML = `
@@ -833,6 +870,7 @@ async function setupAdminPage() {
   const productForm = document.getElementById("product-form");
   const logoutButton = document.getElementById("logout-button");
   const cancelEditButton = document.getElementById("cancel-edit-button");
+  const openCreateButton = document.getElementById("open-create-product");
   await renderAdminPanel();
   setProductFormMode();
 
@@ -865,6 +903,7 @@ async function setupAdminPage() {
       if (!supabaseClient) return;
       await supabaseClient.auth.signOut();
       setMessage("product-message", translations[currentLang]["admin.logoutDone"]);
+      closeAdminFormModal();
       await renderAdminPanel();
     });
   }
@@ -872,9 +911,32 @@ async function setupAdminPage() {
   if (cancelEditButton) {
     cancelEditButton.addEventListener("click", () => {
       resetProductForm();
+      closeAdminFormModal();
       setMessage("product-message", "");
     });
   }
+
+  if (openCreateButton) {
+    openCreateButton.addEventListener("click", () => {
+      resetProductForm();
+      setMessage("product-message", "");
+      openAdminFormModal();
+    });
+  }
+
+  document.querySelectorAll("[data-admin-filter]").forEach((button) => {
+    button.addEventListener("click", () => {
+      currentAdminFilter = button.dataset.adminFilter;
+      renderAdminProducts();
+    });
+  });
+
+  document.querySelectorAll("[data-close-admin-form]").forEach((button) => {
+    button.addEventListener("click", () => {
+      closeAdminFormModal();
+      resetProductForm();
+    });
+  });
 
   if (productForm) {
     productForm.addEventListener("submit", async (event) => {
@@ -959,6 +1021,7 @@ async function setupAdminPage() {
           ? translations[currentLang]["admin.productUpdated"]
           : translations[currentLang]["admin.productSaved"];
         resetProductForm();
+        closeAdminFormModal();
         setMessage("product-message", successMessage);
         await refreshProducts();
       } catch (error) {

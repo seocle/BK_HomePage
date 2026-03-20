@@ -418,7 +418,13 @@ a {
 }
 
 .button.full {
+  grid-column: 1 / -1;
   width: 100%;
+}
+
+.modal-sheet.is-capturing .modal-close,
+.modal-sheet.is-capturing .modal-actions {
+  display: none;
 }
 
 .section {

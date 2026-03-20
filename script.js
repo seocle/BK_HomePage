@@ -12,6 +12,8 @@ const ADMIN_AUTH = {
   email: "cgh5454@bk-homepage.local"
 };
 
+const KAKAO_FRIEND_LINK = "http://qr.kakao.com/talk/8X7O5eyUTHNKVz83GzjdA7Sj_ac-";
+
 const MARKET_ROUTE_MAP = {
   home: {
     ko: "./kr.html",
@@ -172,7 +174,10 @@ const translations = {
     "admin.syncError": "Supabase 연결 또는 테이블 설정을 확인해 주세요.",
     "modal.prev": "이전",
     "modal.next": "다음",
-    "modal.count": "{current} / {total} 이미지"
+    "modal.count": "{current} / {total} 이미지",
+    "modal.inquiry": "문의하기",
+    "modal.captureSaved": "상세이미지가 저장되었습니다. 카카오톡으로 사진을 전송하여 문의해주세요.\n확인을 누르면 카카오톡 친구추가 링크로 연결됩니다.",
+    "modal.captureFailed": "이미지 저장에 실패했습니다. 다시 시도해 주세요."
   },
   zh: {
     "nav.home": "首页",
@@ -273,7 +278,10 @@ const translations = {
     "admin.syncError": "请检查 Supabase 连接或表设置。",
     "modal.prev": "上一张",
     "modal.next": "下一张",
-    "modal.count": "图片 {current} / {total}"
+    "modal.count": "图片 {current} / {total}",
+    "modal.inquiry": "咨询",
+    "modal.captureSaved": "商品详情图片已保存。请通过 KakaoTalk 发送该图片咨询。\n点击确认后将跳转到 KakaoTalk 添加好友链接。",
+    "modal.captureFailed": "图片保存失败，请再试一次。"
   }
 };
 
@@ -319,6 +327,49 @@ function getCurrentPageRoute(lang = currentLang) {
 function setMessage(id, text) {
   const node = document.getElementById(id);
   if (node) node.textContent = text;
+}
+
+function sanitizeFileName(value) {
+  return String(value || "bk-product")
+    .replace(/[\\/:*?"<>|]+/g, "")
+    .replace(/\s+/g, "-")
+    .slice(0, 50) || "bk-product";
+}
+
+function downloadCapture(dataUrl, fileName) {
+  const link = document.createElement("a");
+  link.href = dataUrl;
+  link.download = fileName;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+}
+
+async function captureProductInquiry() {
+  if (!currentProduct || !window.html2canvas) return;
+
+  const sheet = document.querySelector("#product-modal .modal-sheet");
+  if (!(sheet instanceof HTMLElement)) return;
+
+  try {
+    sheet.classList.add("is-capturing");
+    const canvas = await window.html2canvas(sheet, {
+      backgroundColor: "#ffffff",
+      useCORS: true,
+      scale: Math.min(window.devicePixelRatio || 1, 2)
+    });
+    sheet.classList.remove("is-capturing");
+    const fileName = `${sanitizeFileName(getProductText("name", currentProduct))}-detail.png`;
+    downloadCapture(canvas.toDataURL("image/png"), fileName);
+    const confirmed = window.confirm(translations[currentLang]["modal.captureSaved"]);
+    if (confirmed) {
+      window.location.href = KAKAO_FRIEND_LINK;
+    }
+  } catch (error) {
+    sheet.classList.remove("is-capturing");
+    console.error(error);
+    window.alert(translations[currentLang]["modal.captureFailed"]);
+  }
 }
 
 function setProductFormMode() {
@@ -771,6 +822,11 @@ function renderModal() {
     .replace("{current}", String(currentImageIndex + 1))
     .replace("{total}", String(currentProduct.images.length));
 
+  const captureButton = document.getElementById("capture-inquiry");
+  if (captureButton) {
+    captureButton.textContent = translations[currentLang]["modal.inquiry"];
+  }
+
   let optionBlock = document.getElementById("modal-options");
   if (!optionBlock) {
     optionBlock = document.createElement("div");
@@ -1163,8 +1219,10 @@ document.querySelectorAll("[data-close-modal]").forEach((trigger) => {
 
 const prevButton = document.getElementById("prev-image");
 const nextButton = document.getElementById("next-image");
+const captureButton = document.getElementById("capture-inquiry");
 if (prevButton) prevButton.addEventListener("click", () => moveImage(-1));
 if (nextButton) nextButton.addEventListener("click", () => moveImage(1));
+if (captureButton) captureButton.addEventListener("click", captureProductInquiry);
 
 document.addEventListener("keydown", (event) => {
   const modal = document.getElementById("product-modal");

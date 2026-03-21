@@ -345,20 +345,54 @@ function downloadCapture(dataUrl, fileName) {
   link.remove();
 }
 
+function buildCaptureCard() {
+  const captureRoot = document.createElement("div");
+  captureRoot.style.position = "fixed";
+  captureRoot.style.left = "-99999px";
+  captureRoot.style.top = "0";
+  captureRoot.style.width = "390px";
+  captureRoot.style.padding = "24px";
+  captureRoot.style.background = "#f8f6f2";
+  captureRoot.style.zIndex = "-1";
+
+  const captureCard = document.createElement("article");
+  captureCard.style.background = "#ffffff";
+  captureCard.style.border = "1px solid rgba(24, 22, 20, 0.08)";
+  captureCard.style.borderRadius = "28px";
+  captureCard.style.overflow = "hidden";
+  captureCard.style.boxShadow = "0 14px 30px rgba(24, 22, 20, 0.08)";
+
+  captureCard.innerHTML = `
+    <img src="${currentProduct.images[currentImageIndex]}" alt="${getProductText("name", currentProduct)}" style="display:block;width:100%;aspect-ratio:4/5;object-fit:contain;object-position:center center;background:#f5f2ed;">
+    <div style="padding:22px;font-family:'Noto Sans KR','Noto Sans SC',sans-serif;color:#181614;">
+      <p style="margin:0 0 10px;color:#7f5e44;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;">${getProductText("label", currentProduct) || "B&K"}</p>
+      <h2 style="margin:0;font-family:'Cormorant Garamond',serif;font-size:42px;line-height:0.96;">${getProductText("name", currentProduct)}</h2>
+      <p style="margin:14px 0 0;color:#6e655c;line-height:1.7;">${getProductText("description", currentProduct)}</p>
+      <div style="margin-top:16px;font-size:22px;font-weight:700;color:#533c2b;">${getPriceMarkup(currentProduct)}</div>
+      <div style="margin-top:14px;">${renderOptionTags(currentProduct.colors)}${renderOptionTags(currentProduct.sizes)}</div>
+      <p style="margin:14px 0 0;color:#6e655c;">${translations[currentLang]["modal.count"]
+        .replace("{current}", String(currentImageIndex + 1))
+        .replace("{total}", String(currentProduct.images.length))}</p>
+    </div>
+  `;
+
+  captureRoot.appendChild(captureCard);
+  document.body.appendChild(captureRoot);
+  return captureRoot;
+}
+
 async function captureProductInquiry() {
   if (!currentProduct || !window.html2canvas) return;
 
-  const sheet = document.querySelector("#product-modal .modal-sheet");
-  if (!(sheet instanceof HTMLElement)) return;
-
+  let captureRoot = null;
   try {
-    sheet.classList.add("is-capturing");
-    const canvas = await window.html2canvas(sheet, {
+    captureRoot = buildCaptureCard();
+    const canvas = await window.html2canvas(captureRoot, {
       backgroundColor: "#ffffff",
       useCORS: true,
       scale: Math.min(window.devicePixelRatio || 1, 2)
     });
-    sheet.classList.remove("is-capturing");
+    captureRoot.remove();
     const fileName = `${sanitizeFileName(getProductText("name", currentProduct))}-detail.png`;
     downloadCapture(canvas.toDataURL("image/png"), fileName);
     const confirmed = window.confirm(translations[currentLang]["modal.captureSaved"]);
@@ -366,7 +400,7 @@ async function captureProductInquiry() {
       window.location.href = KAKAO_FRIEND_LINK;
     }
   } catch (error) {
-    sheet.classList.remove("is-capturing");
+    if (captureRoot) captureRoot.remove();
     console.error(error);
     window.alert(translations[currentLang]["modal.captureFailed"]);
   }

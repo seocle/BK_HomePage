@@ -374,43 +374,44 @@ function buildCaptureCard() {
   captureRoot.style.position = "fixed";
   captureRoot.style.left = "-99999px";
   captureRoot.style.top = "0";
-  captureRoot.style.width = "430px";
-  captureRoot.style.padding = "20px";
-  captureRoot.style.background = "linear-gradient(180deg, #fbfaf8 0%, #f2ede7 100%)";
+  captureRoot.style.width = "392px";
+  captureRoot.style.padding = "0";
+  captureRoot.style.background = "#f6f3ee";
   captureRoot.style.zIndex = "-1";
 
   const captureCard = document.createElement("article");
+  captureCard.style.width = "392px";
   captureCard.style.background = "#ffffff";
   captureCard.style.border = "1px solid rgba(24, 22, 20, 0.08)";
-  captureCard.style.borderRadius = "32px";
+  captureCard.style.borderRadius = "30px";
   captureCard.style.overflow = "hidden";
-  captureCard.style.boxShadow = "0 20px 40px rgba(24, 22, 20, 0.1)";
+  captureCard.style.boxShadow = "0 16px 32px rgba(24, 22, 20, 0.08)";
 
   captureCard.innerHTML = `
-    <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 22px 0;font-family:'Noto Sans KR','Noto Sans SC',sans-serif;color:#181614;">
-      <img src="./Image/Logo/BK_Logo.png" alt="B&K" style="display:block;width:auto;height:28px;object-fit:contain;">
-      <span style="display:inline-flex;align-items:center;justify-content:center;min-height:32px;padding:0 12px;border-radius:999px;background:#f6efe8;color:#7f5e44;font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">${productLabel}</span>
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 20px 12px;font-family:'Noto Sans KR','Noto Sans SC',sans-serif;color:#181614;background:#ffffff;">
+      <img src="./Image/Logo/BK_Logo.png" alt="B&K" style="display:block;width:auto;height:22px;object-fit:contain;">
+      <span style="display:inline-flex;align-items:center;justify-content:center;min-height:30px;padding:0 12px;border-radius:999px;background:#f6efe8;color:#7f5e44;font-size:11px;font-weight:700;letter-spacing:0.04em;">${productLabel}</span>
     </div>
-    <div style="padding:16px 16px 0;">
-      <div style="display:grid;place-items:center;overflow:hidden;border-radius:26px;background:linear-gradient(180deg,#f5f1eb 0%,#ebe5dd 100%);min-height:470px;">
-        <img src="${currentProduct.images[currentImageIndex]}" alt="${productName}" style="display:block;width:100%;height:100%;max-height:520px;object-fit:contain;object-position:center center;">
+    <div style="padding:0 20px;">
+      <div style="display:grid;place-items:center;overflow:hidden;border-radius:24px;background:linear-gradient(180deg,#f5f1eb 0%,#ebe5dd 100%);min-height:470px;">
+        <img src="${currentProduct.images[currentImageIndex]}" alt="${productName}" style="display:block;width:100%;height:470px;object-fit:contain;object-position:center center;">
       </div>
     </div>
-    <div style="display:grid;gap:18px;padding:22px 22px 24px;font-family:${isKorean ? "'Noto Sans KR'" : "'Noto Sans SC'"},'Noto Sans KR',sans-serif;color:#181614;">
-      <div style="display:grid;gap:10px;">
-        <h2 style="margin:0;font-family:'Cormorant Garamond',serif;font-size:44px;line-height:0.94;letter-spacing:0.01em;">${productName}</h2>
-        ${productDescription ? `<p style="margin:0;color:#6e655c;font-size:15px;line-height:1.7;word-break:keep-all;">${productDescription}</p>` : ""}
+    <div style="display:grid;gap:16px;padding:18px 20px 20px;font-family:${isKorean ? "'Noto Sans KR'" : "'Noto Sans SC'"},'Noto Sans KR',sans-serif;color:#181614;background:#ffffff;">
+      <div style="display:grid;gap:8px;">
+        <h2 style="margin:0;font-family:'Cormorant Garamond',serif;font-size:29px;line-height:1.02;letter-spacing:0;word-break:keep-all;">${productName}</h2>
+        ${productDescription ? `<p style="margin:0;color:#6e655c;font-size:13px;line-height:1.6;word-break:keep-all;">${productDescription}</p>` : ""}
       </div>
-      <div style="display:grid;gap:14px;padding:18px;border-radius:24px;background:#faf7f2;border:1px solid rgba(24,22,20,0.06);">
-        <div style="font-size:24px;font-weight:700;line-height:1.35;color:#533c2b;">${getPriceMarkup(currentProduct)}</div>
-        <div style="display:grid;gap:14px;">
+      <div style="display:grid;gap:12px;padding:16px;border-radius:22px;background:#faf7f2;border:1px solid rgba(24,22,20,0.06);">
+        <div style="font-size:19px;font-weight:700;line-height:1.35;color:#533c2b;">${getPriceMarkup(currentProduct)}</div>
+        <div style="display:grid;gap:12px;">
           ${renderCaptureOptionGroup(isKorean ? "COLOR" : "颜色", currentProduct.colors)}
           ${renderCaptureOptionGroup(isKorean ? "SIZE" : "尺码", currentProduct.sizes)}
         </div>
       </div>
-      <div style="display:flex;align-items:center;justify-content:space-between;">
-        <p style="margin:0;color:#6e655c;font-size:14px;">${imageCountText}</p>
-        <span style="display:inline-flex;align-items:center;justify-content:center;min-height:30px;padding:0 12px;border-radius:999px;background:#12100f;color:#ffffff;font-size:12px;font-weight:700;letter-spacing:0.08em;">B&amp;K</span>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding-top:2px;">
+        <p style="margin:0;color:#6e655c;font-size:13px;">${imageCountText}</p>
+        <span style="display:inline-flex;align-items:center;justify-content:center;min-height:28px;padding:0 11px;border-radius:999px;background:#12100f;color:#ffffff;font-size:11px;font-weight:700;letter-spacing:0.04em;">B&amp;K</span>
       </div>
     </div>
   `;

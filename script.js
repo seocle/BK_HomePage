@@ -345,34 +345,73 @@ function downloadCapture(dataUrl, fileName) {
   link.remove();
 }
 
+function renderCaptureOptionGroup(title, values) {
+  if (!Array.isArray(values) || !values.length) return "";
+
+  return `
+    <section style="display:grid;gap:10px;">
+      <p style="margin:0;font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#7f5e44;">${title}</p>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;">
+        ${values.map((value) => `
+          <span style="display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 14px;border-radius:999px;border:1px solid rgba(24,22,20,0.08);background:#f8f4ef;color:#181614;font-size:14px;font-weight:500;">${value}</span>
+        `).join("")}
+      </div>
+    </section>
+  `;
+}
+
 function buildCaptureCard() {
+  const productName = getProductText("name", currentProduct);
+  const productLabel = getProductText("label", currentProduct) || "B&K";
+  const rawDescription = getProductText("description", currentProduct).trim();
+  const productDescription = rawDescription && !/^[.\s]+$/.test(rawDescription) ? rawDescription : "";
+  const imageCountText = translations[currentLang]["modal.count"]
+    .replace("{current}", String(currentImageIndex + 1))
+    .replace("{total}", String(currentProduct.images.length));
+  const isKorean = currentLang === "ko";
+
   const captureRoot = document.createElement("div");
   captureRoot.style.position = "fixed";
   captureRoot.style.left = "-99999px";
   captureRoot.style.top = "0";
-  captureRoot.style.width = "390px";
-  captureRoot.style.padding = "24px";
-  captureRoot.style.background = "#f8f6f2";
+  captureRoot.style.width = "430px";
+  captureRoot.style.padding = "20px";
+  captureRoot.style.background = "linear-gradient(180deg, #fbfaf8 0%, #f2ede7 100%)";
   captureRoot.style.zIndex = "-1";
 
   const captureCard = document.createElement("article");
   captureCard.style.background = "#ffffff";
   captureCard.style.border = "1px solid rgba(24, 22, 20, 0.08)";
-  captureCard.style.borderRadius = "28px";
+  captureCard.style.borderRadius = "32px";
   captureCard.style.overflow = "hidden";
-  captureCard.style.boxShadow = "0 14px 30px rgba(24, 22, 20, 0.08)";
+  captureCard.style.boxShadow = "0 20px 40px rgba(24, 22, 20, 0.1)";
 
   captureCard.innerHTML = `
-    <img src="${currentProduct.images[currentImageIndex]}" alt="${getProductText("name", currentProduct)}" style="display:block;width:100%;aspect-ratio:4/5;object-fit:contain;object-position:center center;background:#f5f2ed;">
-    <div style="padding:22px;font-family:'Noto Sans KR','Noto Sans SC',sans-serif;color:#181614;">
-      <p style="margin:0 0 10px;color:#7f5e44;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;">${getProductText("label", currentProduct) || "B&K"}</p>
-      <h2 style="margin:0;font-family:'Cormorant Garamond',serif;font-size:42px;line-height:0.96;">${getProductText("name", currentProduct)}</h2>
-      <p style="margin:14px 0 0;color:#6e655c;line-height:1.7;">${getProductText("description", currentProduct)}</p>
-      <div style="margin-top:16px;font-size:22px;font-weight:700;color:#533c2b;">${getPriceMarkup(currentProduct)}</div>
-      <div style="margin-top:14px;">${renderOptionTags(currentProduct.colors)}${renderOptionTags(currentProduct.sizes)}</div>
-      <p style="margin:14px 0 0;color:#6e655c;">${translations[currentLang]["modal.count"]
-        .replace("{current}", String(currentImageIndex + 1))
-        .replace("{total}", String(currentProduct.images.length))}</p>
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 22px 0;font-family:'Noto Sans KR','Noto Sans SC',sans-serif;color:#181614;">
+      <img src="./Image/Logo/BK_Logo.png" alt="B&K" style="display:block;width:auto;height:28px;object-fit:contain;">
+      <span style="display:inline-flex;align-items:center;justify-content:center;min-height:32px;padding:0 12px;border-radius:999px;background:#f6efe8;color:#7f5e44;font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">${productLabel}</span>
+    </div>
+    <div style="padding:16px 16px 0;">
+      <div style="display:grid;place-items:center;overflow:hidden;border-radius:26px;background:linear-gradient(180deg,#f5f1eb 0%,#ebe5dd 100%);min-height:470px;">
+        <img src="${currentProduct.images[currentImageIndex]}" alt="${productName}" style="display:block;width:100%;height:100%;max-height:520px;object-fit:contain;object-position:center center;">
+      </div>
+    </div>
+    <div style="display:grid;gap:18px;padding:22px 22px 24px;font-family:${isKorean ? "'Noto Sans KR'" : "'Noto Sans SC'"},'Noto Sans KR',sans-serif;color:#181614;">
+      <div style="display:grid;gap:10px;">
+        <h2 style="margin:0;font-family:'Cormorant Garamond',serif;font-size:44px;line-height:0.94;letter-spacing:0.01em;">${productName}</h2>
+        ${productDescription ? `<p style="margin:0;color:#6e655c;font-size:15px;line-height:1.7;word-break:keep-all;">${productDescription}</p>` : ""}
+      </div>
+      <div style="display:grid;gap:14px;padding:18px;border-radius:24px;background:#faf7f2;border:1px solid rgba(24,22,20,0.06);">
+        <div style="font-size:24px;font-weight:700;line-height:1.35;color:#533c2b;">${getPriceMarkup(currentProduct)}</div>
+        <div style="display:grid;gap:14px;">
+          ${renderCaptureOptionGroup(isKorean ? "COLOR" : "颜色", currentProduct.colors)}
+          ${renderCaptureOptionGroup(isKorean ? "SIZE" : "尺码", currentProduct.sizes)}
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <p style="margin:0;color:#6e655c;font-size:14px;">${imageCountText}</p>
+        <span style="display:inline-flex;align-items:center;justify-content:center;min-height:30px;padding:0 12px;border-radius:999px;background:#12100f;color:#ffffff;font-size:12px;font-weight:700;letter-spacing:0.08em;">B&amp;K</span>
+      </div>
     </div>
   `;
 

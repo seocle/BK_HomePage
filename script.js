@@ -175,8 +175,9 @@ const translations = {
     "modal.prev": "이전",
     "modal.next": "다음",
     "modal.count": "{current} / {total} 이미지",
+    "modal.save": "사진 저장",
     "modal.inquiry": "문의하기",
-    "modal.captureSaved": "상세이미지가 저장되었습니다. 카카오톡으로 사진을 전송하여 문의해주세요.\n확인을 누르면 카카오톡 친구추가 링크로 연결됩니다.",
+    "modal.captureSaved": "상세이미지가 저장되었습니다. 카카오톡으로 사진을 전송하여 문의해주세요.",
     "modal.captureFailed": "이미지 저장에 실패했습니다. 다시 시도해 주세요."
   },
   zh: {
@@ -279,8 +280,9 @@ const translations = {
     "modal.prev": "上一张",
     "modal.next": "下一张",
     "modal.count": "图片 {current} / {total}",
+    "modal.save": "保存图片",
     "modal.inquiry": "咨询",
-    "modal.captureSaved": "商品详情图片已保存。请通过 KakaoTalk 发送该图片咨询。\n点击确认后将跳转到 KakaoTalk 添加好友链接。",
+    "modal.captureSaved": "商品详情图片已保存。请通过 KakaoTalk 发送该图片咨询。",
     "modal.captureFailed": "图片保存失败，请再试一次。"
   }
 };
@@ -421,7 +423,7 @@ function buildCaptureCard() {
   return captureRoot;
 }
 
-async function captureProductInquiry() {
+async function saveProductCapture() {
   if (!currentProduct || !window.html2canvas) return;
 
   let captureRoot = null;
@@ -435,15 +437,16 @@ async function captureProductInquiry() {
     captureRoot.remove();
     const fileName = `${sanitizeFileName(getProductText("name", currentProduct))}-detail.png`;
     downloadCapture(canvas.toDataURL("image/png"), fileName);
-    const confirmed = window.confirm(translations[currentLang]["modal.captureSaved"]);
-    if (confirmed) {
-      window.location.href = KAKAO_FRIEND_LINK;
-    }
+    window.alert(translations[currentLang]["modal.captureSaved"]);
   } catch (error) {
     if (captureRoot) captureRoot.remove();
     console.error(error);
     window.alert(translations[currentLang]["modal.captureFailed"]);
   }
+}
+
+function openProductInquiry() {
+  window.location.href = KAKAO_FRIEND_LINK;
 }
 
 function setProductFormMode() {
@@ -896,9 +899,13 @@ function renderModal() {
     .replace("{current}", String(currentImageIndex + 1))
     .replace("{total}", String(currentProduct.images.length));
 
-  const captureButton = document.getElementById("capture-inquiry");
-  if (captureButton) {
-    captureButton.textContent = translations[currentLang]["modal.inquiry"];
+  const saveButton = document.getElementById("save-product-image");
+  const inquiryButton = document.getElementById("open-product-inquiry");
+  if (saveButton) {
+    saveButton.textContent = translations[currentLang]["modal.save"];
+  }
+  if (inquiryButton) {
+    inquiryButton.textContent = translations[currentLang]["modal.inquiry"];
   }
 
   let optionBlock = document.getElementById("modal-options");
@@ -1293,10 +1300,12 @@ document.querySelectorAll("[data-close-modal]").forEach((trigger) => {
 
 const prevButton = document.getElementById("prev-image");
 const nextButton = document.getElementById("next-image");
-const captureButton = document.getElementById("capture-inquiry");
+const saveButton = document.getElementById("save-product-image");
+const inquiryButton = document.getElementById("open-product-inquiry");
 if (prevButton) prevButton.addEventListener("click", () => moveImage(-1));
 if (nextButton) nextButton.addEventListener("click", () => moveImage(1));
-if (captureButton) captureButton.addEventListener("click", captureProductInquiry);
+if (saveButton) saveButton.addEventListener("click", saveProductCapture);
+if (inquiryButton) inquiryButton.addEventListener("click", openProductInquiry);
 
 document.addEventListener("keydown", (event) => {
   const modal = document.getElementById("product-modal");
